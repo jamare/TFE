@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+            <h1>- Liste des demandes -</h1>
+            <hr>
+            <div class="row">
+                {% for demand in demands %}
+                    {% set url = path('demands_show',{'id':demand.id}) %}
+                    <div>
+                        <h2><a href="{{ url }}">{{ demand.title }}</a></h2>
+                        <div><p>{{ demand.description|raw }}</p></div><br />
+                        <a href="{{ url }}" class="btn btn-primary">Consulter la demande</a></p>
+
+                    </div>
+
+
+                {% endfor %}
+            </div>
+        </div>
+
+    {% endblock %}
+{% endblock %}

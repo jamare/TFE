@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+            <h1>- Détail de la demande -</h1>
+            <hr>
+            <div class="row">
+                <h2>{{ demand.title }}</h2>
+                <p>{{ demand.description|raw }}</p>
+
+                <hr>
+                Demandeur :
+                <h3></h3>
+
+
+            </div>
+        </div>
+
+    {% endblock %}
+{% endblock %}
