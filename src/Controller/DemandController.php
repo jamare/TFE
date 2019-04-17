@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Demand;
+use App\Form\DemandType;
 use App\Repository\DemandRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,10 +33,61 @@ class DemandController extends AbstractController
      *
      * @return Response
      */
-    public function create(){
-        return $this->render('demand/new.html.twig');
+    public function create(Request $request, ObjectManager $manager){
+
+        $demand = new Demand();
+
+        $form = $this->createForm(DemandType::class, $demand);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $manager->persist($demand);
+            $manager->flush();
+
+            $this->addFlash(
+                'success', 'La demande a bien été enregistrée !'
+            );
+
+            return $this->redirectToRoute('demands_show',[
+                'id' => $demand->getId()
+            ]);
+        }
+
+        return $this->render('demand/new.html.twig',[
+            'form' => $form->createView()
+        ]);
     }
 
+    /**
+     * Edition d'une annonce
+     * @Route("/demands/{id}/edit", name="demands_edit")
+     */
+    public function edit(Demand $demand, Request $request, ObjectManager $manager){
+
+        $form = $this->createForm(DemandType::class, $demand);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $manager->persist($demand);
+            $manager->flush();
+
+            $this->addFlash(
+                'success', 'Les modifications apportées à la demande ont bien été enregistrées !'
+            );
+
+            return $this->redirectToRoute('demands_show',[
+                'id' => $demand->getId()
+            ]);
+        }
+
+
+        return $this->render('demand/edit.html.twig', [
+            'form' => $form->createView(),
+            'demand' => $demand
+        ]);
+    }
 
     /**
      * Affichage d'une seule annonce

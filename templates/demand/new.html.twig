@@ -1,16 +1,21 @@
 {% extends 'base.html.twig' %}
 
-
+{% block title %} Création de votre demande{% endblock %}
 
 {% block body %}
     {% block content %}
         <div class="container">
             <h1>- Création d'une annonce -</h1>
             <hr>
-            <div class="row">
+
+                {{ form_start(form) }}
+
+                {{ form_widget(form) }}
+
+                <button type="submit" class="btn btn-primary">Créez la demande</button>
+                {{ form_end(form) }}
 
 
-            </div>
         </div>
 
     {% endblock %}

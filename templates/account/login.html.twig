@@ -38,7 +38,25 @@
         <figure>
             <a href="index.html"><img src="{{ asset('assets/img/logo_sticky.svg') }}" width="165" height="35" alt="" class="logo_sticky"></a>
         </figure>
-        <form>
+        <h2>Connectez-vous !</h2>
+        {% if hasError %}
+            <div class="alert alert-danger">Une erreur est survenue, le nom d'utilisateur ou votre mot de passe est invalide</div>
+        {% endif %}
+        <form action="{{ path('account_login') }}" method="post">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="_username" id="email" class="form-control" placeholder="Adresse email..." required value="{{ username }}">
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" name="_password" id="password" class="form-control" placeholder="Mot de pass ..." required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Connexion</button>
+            </div>
+
+        </form>
+        <!--<form>
 
             <div class="form-group">
                 <label>Email</label>
@@ -61,7 +79,7 @@
             </div>
             <a href="#0" class="btn_1 rounded full-width">Se connecter</a>
             <div class="text-center add_top_10">Nouvel utilisateur? <strong><a href="register.html">S'enregistrer!</a></strong></div>
-        </form>
+        </form>-->
         <div class="copy">© 2019 Titre du site</div>
     </aside>
 </div>

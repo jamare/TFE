@@ -10,19 +10,32 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture implements DependentFixtureInterface
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder){
+        $this->encoder = $encoder;
+    }
+
     const AMOUNT_CP = 6;
     const AMOUNT_LOCALITY = 3;
 
     public function load(ObjectManager $manager)
     {
+
         $faker= Factory::create('fr_FR');
 
         // Création des prestataires
         for($i=1;$i<=10;$i++){
+
+
             $provider = new Provider();
+
+            $password = $this->encoder->encodePassword($provider, 'password');
+
             $provider->setName($faker->company);
             $provider->setAddress($faker->streetAddress);
             $randCP = rand(1,self::AMOUNT_CP);
@@ -35,7 +48,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             $provider->addService($this->getReference("category_".rand(1,8)));
             $provider->addService($this->getReference("category_".rand(1,8)));
             $provider->setRegistration($faker->dateTimeBetween('-365 days', '-1 days'));
-            $provider->setPassword('password');
+            $provider->setPassword($password);
             $provider->setBanished(false);
 
             $manager->persist($provider);
@@ -44,6 +57,8 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
         // Création des utilisateurs du site
         for($j=1;$j<=10;$j++){
             $customer = new Customer();
+
+            $password = $this->encoder->encodePassword($customer, 'password');
             $customer->setName($faker->lastName);
             $customer->setFirstName($faker->firstName);
             $customer->setAddress($faker->streetAddress);
@@ -53,7 +68,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             $customer->setPhone($faker->phoneNumber);
             $customer->setEmail($faker->email);
             $customer->setRegistration($faker->dateTimeBetween('-365 days', '-1 days'));
-            $customer->setPassword('password');
+            $customer->setPassword($password);
             $customer->setBanished(false);
             //$customer->addDemand($this->getReference('demand_'.rand(1,10)));
 
