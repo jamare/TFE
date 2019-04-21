@@ -6,8 +6,15 @@
         </a>
     </div>
     <ul id="top_menu">
-        <li><a href="account.html" class="btn_add">Add Listing</a></li>
-        <li><a href="{{ path('account_login') }}" id="sign-in" class="login" title="Sign In">S'identifier</a></li>
+
+        {% if app.user %}
+            <li><a href="#" class="btn_add">Mon compte</a></li>
+            <li><a href="{{ path('account_logout') }}" id="log-out" class="icon-logout" title="Se déconnecter"></a></li>
+        {% else %}
+            <li><a href="#" class="btn_add">S'inscrire</a></li>
+            <li><a href="{{ path('account_login') }}" id="sign-in" class="login" title="Se connecter">Se connecter</a></li>
+        {% endif %}
+
 
     </ul>
     <!-- /top_menu -->
@@ -66,40 +73,7 @@
                     <li><a href="confirm.html">Confirm</a></li>
                 </ul>
             </li>
-            <li><span><a href="#0">Catégories</a></span>
-                <ul>
-                    <li><a href="admin_section/index.html">Admin section</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="account.html">Account</a></li>
-                    <li><a href="help.html">Help Section</a></li>
-                    <li><a href="faq.html">Faq Section</a></li>
-                    <li><a href="wishlist.html">Wishlist page</a></li>
-                    <li><a href="contacts.html">Contacts</a></li>
-                    <li>
-                        <span><a href="#0">Icon Packs</a></span>
-                        <ul>
-                            <li><a href="icon-pack-1.html">Icon pack 1</a></li>
-                            <li><a href="icon-pack-2.html">Icon pack 2</a></li>
-                            <li><a href="icon-pack-3.html">Icon pack 3</a></li>
-                            <li><a href="icon-pack-4.html">Icon pack 4</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="media-gallery.html">Media gallery</a></li>
-                </ul>
-            </li>
-            <li><span><a href="#0">Extra</a></span>
-                <ul>
-                    <li><a href="404.html">404 page</a></li>
-                    <li><a href="contacts-2.html">Contacts 2</a></li>
-                    <li><a href="pricing-tables.html">Pricing tables</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="register.html">Register</a></li>
-                    <li><a href="menu-options.html">Menu Options</a></li>
-                    <li><a href="invoice.html">Invoice</a></li>
-                    <li><a href="coming_soon/index.html">Coming Soon</a></li>
-                </ul>
-            </li>
+
 
         </ul>
     </nav>
