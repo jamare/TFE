@@ -8,11 +8,12 @@
     <ul id="top_menu">
 
         {% if app.user %}
-            <li><a href="#" class="btn_add">Mon compte</a></li>
+            <li><a href="{{ path('demands_create') }}" class="btn btn-success">Créer un annonce</a></li>
+            <li><a href="{{ path('account_profile') }}" class="btn_add">Mon compte</a></li>
             <li><a href="{{ path('account_logout') }}" id="log-out" class="icon-logout" title="Se déconnecter"></a></li>
         {% else %}
             <li><a href="#" class="btn_add">S'inscrire</a></li>
-            <li><a href="{{ path('account_login') }}" id="sign-in" class="login" title="Se connecter">Se connecter</a></li>
+            <li><a href="{{ path('account_login') }}" id="sign-in" class="login" title="Se connecter"></a></li>
         {% endif %}
 
 
@@ -37,7 +38,7 @@
                     <li><a href="index-6.html">Home version 6 (GDPR)</a></li>
                 </ul>
             </li>
-            <li><span><a href="{{ path('demands_index') }}">Annonces</a></span>
+            <li><span><a href="{{ path('demands_index') }}">Liste des annonces</a></span>
                 <ul>
                     <li>
                         <span><a href="#0">Grid Layout</a></span>

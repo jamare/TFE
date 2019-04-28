@@ -8,12 +8,15 @@
             <h1>- Détail de la demande -</h1>
             <hr>
             <div class="row">
+                {% set d = demand.customer %}
+
                 <h2>{{ demand.title }}</h2>
                 <p>{{ demand.description|raw }}</p>
 
-                <hr>
-                Demandeur :
-                <h3></h3>
+
+                <h3>Demandeur : </h3>
+
+                <a href="{{ path('user_show',{'id':demand.customer.id}) }}"><h4>{{ d.fullName}}</h4></a>
 
 
             </div>

@@ -36,7 +36,7 @@
 <div id="login">
     <aside>
         <figure>
-            <a href="index.html"><img src="{{ asset('assets/img/logo_sticky.svg') }}" width="165" height="35" alt="" class="logo_sticky"></a>
+            <a href="{{ path('home') }}"><img src="{{ asset('assets/img/logo_sticky.svg') }}" width="165" height="35" alt="" class="logo_sticky"></a>
         </figure>
         <h2>Connectez-vous !</h2>
         {% if hasError %}
@@ -53,6 +53,7 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success">Connexion</button>
+                <a href="{{ path('account_register') }}"><span style="float:right">S'inscrire</span></a>
             </div>
 
         </form>

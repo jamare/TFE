@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ customer.fullName }} {% endblock %}
+
+{% block body %}
+     {% block content %}
+        <div class="container">
+            <h1>- Utilisateur: {{ customer.fullName }} -</h1>
+            <hr>
+            <span class="badge badge-primary">{{ customer.demands | length }} annonces</span>
+        </div>
+     {% endblock %}
+{% endblock %}

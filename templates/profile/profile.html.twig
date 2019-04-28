@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Modification de votre compte Pro{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+            <h1>- Modification de votre compte Pro -</h1>
+
+            <hr>
+
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+
+
+        </div>
+
+    {% endblock %}
+{% endblock %}

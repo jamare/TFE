@@ -38,6 +38,10 @@ class Customer extends User
      */
     private $demands;
 
+    public function getFullName(){
+        return "{$this->FirstName} {$this->name}";
+    }
+
     public function __construct()
     {
         $this->demands = new ArrayCollection();

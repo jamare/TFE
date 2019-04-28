@@ -36,12 +36,13 @@ class DemandController extends AbstractController
     public function create(Request $request, ObjectManager $manager){
 
         $demand = new Demand();
+        //$user = $this->getUser();
 
         $form = $this->createForm(DemandType::class, $demand);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-
+            $demand->setCustomer($user);
             $manager->persist($demand);
             $manager->flush();
 
