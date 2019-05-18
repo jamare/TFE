@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Customer;
 use App\Entity\Demand;
 use App\Entity\Provider;
+use App\Entity\Role;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -27,6 +28,28 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
     {
 
         $faker= Factory::create('fr_FR');
+
+        $adminRole = new Role();
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        $adminUser = new Customer();
+        $randCP = rand(1,self::AMOUNT_CP);
+        $adminUser->setName('Jamar')
+                  ->setFirstName('Eric')
+                  ->setAddress('rue lieutenant simon 5')
+                  ->setPostalCode($this->getReference('cp_'.$randCP))
+                  ->setLocality($this->getReference('locality_'.$randCP.'_'.rand(1,self::AMOUNT_LOCALITY)))
+                  ->setEmail('the_real_magnatt@hotmail.com')
+                  ->setPhone('0476777275')
+                  ->setPassword($this->encoder->encodePassword($adminUser, 'password'))
+                  ->setRegistration($faker->dateTimeBetween('-365 days', '-1 days'))
+                  ->setBanished(false)
+                  ->addUserRole($adminRole);
+
+        $manager->persist($adminUser);
+
+
 
         // Création des prestataires
         for($i=1;$i<=10;$i++){
@@ -70,7 +93,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             $customer->setRegistration($faker->dateTimeBetween('-365 days', '-1 days'));
             $customer->setPassword($password);
             $customer->setBanished(false);
-            //$customer->addDemand($this->getReference('demand_'.rand(1,10)));
+
 
             $demand = new Demand();
             $demand->setTitle($faker->sentence);

@@ -5,6 +5,12 @@
 {% block body %}
     {% block content %}
         <div class="container">
+
+            {% if app.user and app.user == demand.customer %}
+                <a href="{{ path('demands_edit', {'id':demand.id}) }}" class="btn btn-secondary">Modifier l'annonce</a>
+                <a href="{{ path('demands_delete', {'id':demand.id}) }}" class="btn btn-danger">Supprimer l'annonce</a>
+            {% endif %}
+
             <h1>- Détail de la demande -</h1>
             <hr>
             <div class="row">
@@ -14,12 +20,22 @@
                 <p>{{ demand.description|raw }}</p>
 
 
-                <h3>Demandeur : </h3>
+                <a href="#" class="btn btn-primary">Proposer mes services</a>
 
-                <a href="{{ path('user_show',{'id':demand.customer.id}) }}"><h4>{{ d.fullName}}</h4></a>
+
+
 
 
             </div>
+
+            <!-- A régler, affichage du nom de l'éditeur de l'annonce -->
+
+           {# <div class="row">
+                <h3>Demandeur : </h3>
+
+                <a href="{{ path('user_show',{'id':demand.customer.id}) }}"><h4>{{ d.fullName}}</h4></a>
+            </div>#}
+
         </div>
 
     {% endblock %}

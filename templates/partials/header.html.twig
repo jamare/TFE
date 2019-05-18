@@ -12,7 +12,7 @@
             <li><a href="{{ path('account_profile') }}" class="btn_add">Mon compte</a></li>
             <li><a href="{{ path('account_logout') }}" id="log-out" class="icon-logout" title="Se déconnecter"></a></li>
         {% else %}
-            <li><a href="#" class="btn_add">S'inscrire</a></li>
+            <li><a href="{{ path('register_temp') }}" class="btn_add">S'inscrire</a></li>
             <li><a href="{{ path('account_login') }}" id="sign-in" class="login" title="Se connecter"></a></li>
         {% endif %}
 
@@ -29,17 +29,17 @@
     <nav id="menu" class="main-menu">
         <ul>
             <li><span><a href="{{ path('home') }}">Accueil</a></span>
-                <ul>
+                <!--<ul>
                     <li><a href="index.html">Home version 1</a></li>
                     <li><a href="index-2.html">Home version 2</a></li>
                     <li><a href="index-3.html">Home version 3</a></li>
                     <li><a href="index-4.html">Home version 4</a></li>
                     <li><a href="index-5.html">Home version 5</a></li>
                     <li><a href="index-6.html">Home version 6 (GDPR)</a></li>
-                </ul>
+                </ul>-->
             </li>
             <li><span><a href="{{ path('demands_index') }}">Liste des annonces</a></span>
-                <ul>
+                <!--<ul>
                     <li>
                         <span><a href="#0">Grid Layout</a></span>
                         <ul>
@@ -72,7 +72,7 @@
                     <li><a href="bookings.html">Bookings - Purchases</a></li>
                     <li><a href="checkout.html">Checkout</a></li>
                     <li><a href="confirm.html">Confirm</a></li>
-                </ul>
+                </ul>-->
             </li>
 
 

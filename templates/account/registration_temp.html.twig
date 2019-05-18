@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="SPARKER - Premium directory and listings template by Ansonika.">
+    <meta name="author" content="Ansonika">
+    <title>Titre du site | Identification</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="{{ asset('assets/img/apple-touch-icon-57x57-precomposed.png') }}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="{{ asset('assets/img/apple-touch-icon-72x72-precomposed.png') }}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="{{ asset('assets/img/apple-touch-icon-114x114-precomposed.png') }}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="{{ asset('assets/img/apple-touch-icon-144x144-precomposed.png') }}">
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/vendors.css') }}" rel="stylesheet">
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
+
+</head>
+
+<body id="login_bg">
+
+<nav id="menu" class="fake_menu"></nav>
+
+<div id="login">
+    <aside>
+        <figure>
+            <a href="{{ path('home') }}"><img src="{{ asset('assets/img/logo_sticky.svg') }}" width="165" height="35" alt="" class="logo_sticky"></a>
+        </figure>
+
+        {# if hasError #}
+            <!--<div class="alert alert-danger">Une erreur est survenue, le nom d'utilisateur ou votre mot de passe est invalide</div>-->
+        {# endif #}
+
+        <h2>Inscription : </h2>
+
+        <hr />
+        <div class="container">
+            <h5>Vous êtes un particulier, vous voulez déposer une annonce ?</h5>
+
+            <h5>Ou vous êtes un professionnel, vous proposez vos services ?</h5>
+            <h4>Inscrivez-vous dès maintenant.</h4>
+
+            <p>Veuillez saisir votre adresse email</p>
+
+            {{ form_start(registrationTemp) }}
+            {{ form_widget(registrationTemp) }}
+            {{ form_end(registrationTemp) }}
+
+            <p>Un email de confirmation vous sera envoyé sur votre boîte email pour la création de votre profil</p>
+        </div>
+
+        <div class="copy">© 2019 Titre du site</div>
+    </aside>
+</div>
+<!-- /login -->
+
+<!-- COMMON SCRIPTS -->
+<script src="{{ asset('assets/js/common_scripts.js') }}"></script>
+<script src="{{ asset('assets/js/functions.js') }}"></script>
+<script src="{{ asset('assets/assets/validate.js') }}"></script>
+
+</body>
+</html>

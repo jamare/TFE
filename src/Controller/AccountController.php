@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Entity\Provider;
+use App\Entity\TempUser;
+use App\Form\RegistrationTempType;
 use App\Form\RegistrationType;
 use App\Form\RegistrationUserType;
+use App\Utils\Mailer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,6 +50,105 @@ class AccountController extends AbstractController
     }
 
     /**
+     * @Route("/account_temp", name="register_temp")
+     *
+     */
+    public function registerTemp(Request $request, Mailer $register_temp){
+
+        $tempUser = new TempUser();
+
+        $form = $this->createForm(RegistrationTempType::class, $tempUser);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $token = bin2hex(openssl_random_pseudo_bytes(16));
+            $tempUser->setToken($token);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tempUser);
+            $em->flush();
+            $register_temp->registerMail($tempUser);
+
+            $this->addFlash(
+                'success',
+                'Votre demande d\'inscription a bien été introduite, un email de confirmation vous a été envoyé par email !'
+            );
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('account/registration_temp.html.twig', [
+            'registrationTemp' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/account/{type}/{token}", name="account_confirm")
+     */
+    public function registerConfirm(Request $request, $token, $type, UserPasswordEncoderInterface $encoder){
+
+        $repository = $this->getDoctrine()->getRepository(TempUser::class);
+        $repository->findByToken(['token' => $token]);
+
+        if($type === 'customer'){
+            $customer = new Customer();
+
+            $form = $this->createForm(RegistrationUserType::class, $customer);
+            $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()){
+                $password = $encoder->encodePassword($customer, $customer->getPassword());
+                $customer->setPassword($password);
+
+                $customer->setRegistration(new \DateTime());
+                $customer->setBanished(0);
+
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($customer);
+                $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Votre compte a bien été créé ! Vous pouvez maintenant vous connecter !'
+                );
+                return $this->redirectToRoute('account_login');
+            }
+            return $this->render('account/registration_user.html.twig',[
+                'form' => $form->createView()
+            ]);
+        }
+
+        else if($type === 'provider'){
+            $provider = new Provider();
+
+            $form = $this->createForm(RegistrationType::class, $provider);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $password = $encoder->encodePassword($provider, $provider->getPassword());
+                $provider->setPassword($password);
+
+                $provider->setRegistration(new \DateTime());
+                $provider->setBanished(0);
+
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($provider);
+                $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Votre compte Pro a bien été créé ! Vous pouvez maintenant vous connecter !'
+                );
+                return $this->redirectToRoute('account_login');
+            }
+            return $this->render('account/registration.html.twig',[
+                'form' => $form->createView()
+            ]);
+        }
+
+    }
+
+    /**
      * Permet d'afficher le formulaire d'inscription Pro
      *
      * @Route("/register", name="account_register")
@@ -57,7 +159,6 @@ class AccountController extends AbstractController
         $provider = new Provider();
 
         $form = $this->createForm(RegistrationType::class, $provider);
-
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){

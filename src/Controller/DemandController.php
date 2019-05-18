@@ -42,7 +42,7 @@ class DemandController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $demand->setCustomer($user);
+            $demand->setCustomer($this->getUser());
             $manager->persist($demand);
             $manager->flush();
 
@@ -50,7 +50,7 @@ class DemandController extends AbstractController
                 'success', 'La demande a bien été enregistrée !'
             );
 
-            return $this->redirectToRoute('demands_show',[
+            return $this->redirectToRoute('demands_index',[
                 'id' => $demand->getId()
             ]);
         }
@@ -103,5 +103,25 @@ class DemandController extends AbstractController
         ]);
     }
 
+    /**
+     * Permet de supprimer une annonce
+     *
+     * @Route("/demands/{id}/delete", name="demands_delete")
+     *
+     * @param Demand $demand
+     * @param ObjectManager $manager
+     * @return Response
+     *
+     */
+    public function delete(Demand $demand, ObjectManager $manager){
+        $manager->remove($demand);
+        $manager->flush();
+
+        $this->addFlash(
+            'success', "L'annonce <strong>{$demand->getTitle()}</strong> a bien été supprimée !"
+        );
+
+        return $this->redirectToRoute("demands_index");
+    }
 
 }
