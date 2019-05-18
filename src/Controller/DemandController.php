@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class DemandController extends AbstractController
 {
@@ -63,6 +65,9 @@ class DemandController extends AbstractController
     /**
      * Edition d'une annonce
      * @Route("/demands/{id}/edit", name="demands_edit")
+     * @Security("is_granted('ROLE_USER') and user === demand.getCustomer()", message="Cette annonce ne vous appartient pas, vous ne pouvez pas la modifier")
+     *
+     * @return Response
      */
     public function edit(Demand $demand, Request $request, ObjectManager $manager){
 

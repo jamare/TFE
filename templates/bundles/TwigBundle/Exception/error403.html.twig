@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vous n'avez pas le droit d'accéder à cette ressource !{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+            <h1>Désolé, vous n'avez pas les droits nécessaires !</h1>
+            <div class="alert alert-danger">
+                Vous n'avez pas le droit d'accéder à cette ressource !
+            </div>
+            <a href="{{ path('home') }}" class="btn btn-primary">Retour à l'accueil</a>
+
+
+        </div>
+    {% endblock %}
+{% endblock %}
