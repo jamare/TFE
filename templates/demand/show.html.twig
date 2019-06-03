@@ -20,7 +20,7 @@
                 <p>{{ demand.description|raw }}</p>
 
 
-                <a href="#" class="btn btn-primary">Proposer mes services</a>
+                <a href="{{ path('execution_create', {'id': demand.id}) }}" class="btn btn-primary">Proposer mes services</a>
 
 
 

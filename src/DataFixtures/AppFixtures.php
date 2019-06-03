@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Entity\Customer;
 use App\Entity\Demand;
+use App\Entity\Execution;
 use App\Entity\Provider;
 use App\Entity\Role;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -29,7 +30,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
 
         $faker= Factory::create('fr_FR');
 
-        $adminRole = new Role();
+        /*$adminRole = new Role();
         $adminRole->setTitle('ROLE_ADMIN');
         $manager->persist($adminRole);
 
@@ -47,10 +48,10 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                   ->setBanished(false)
                   ->addUserRole($adminRole);
 
-        $manager->persist($adminUser);
+        $manager->persist($adminUser);*/
 
 
-
+        $providers = [];
         // Création des prestataires
         for($i=1;$i<=10;$i++){
 
@@ -75,6 +76,8 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             $provider->setBanished(false);
 
             $manager->persist($provider);
+
+            $providers[] = $provider;
         }
 
         // Création des utilisateurs du site
@@ -101,9 +104,37 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             $demand->setDescription($description);
             $demand->setCustomer($customer);
 
+            //Gestion des relations demandes->exécuteurs
+
+            for($k = 1; $k <= mt_rand(0,5);$k++){
+                $execution  = new Execution();
+
+                $createdAd = $faker->dateTimeBetween('-4 months');
+                $startDate = $faker->dateTimeBetween('-2 months');
+                // Gestion de la durée de la prestation
+                $duration = mt_rand(4,10);
+                $endDate =  (clone $startDate)->modify("+$duration days");
+
+                $amount = mt_rand(500,15000);
+                $performer = $providers[mt_rand(0, count($providers) -1)];
+                $comment = $faker->paragraph();
+
+                $execution->setProvider($performer)
+                          ->setDemand($demand)
+                          ->setStartDate($startDate)
+                          ->setEnDate($endDate)
+                          ->setCreatedAt($createdAd)
+                          ->setAmount($amount)
+                          ->setComment($comment);
+
+                $manager->persist($execution);
+
+            }
+
             $manager->persist($demand);
             $manager->persist($customer);
         }
+
 
 
         $manager->flush();

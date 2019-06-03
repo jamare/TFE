@@ -47,9 +47,15 @@ class Provider extends User
      */
     private $Service;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Execution", mappedBy="provider")
+     */
+    private $executions;
+
     public function __construct()
     {
         $this->Service = new ArrayCollection();
+        $this->executions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,6 +120,37 @@ class Provider extends User
     {
         if ($this->Service->contains($service)) {
             $this->Service->removeElement($service);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Execution[]
+     */
+    public function getExecutions(): Collection
+    {
+        return $this->executions;
+    }
+
+    public function addExecution(Execution $execution): self
+    {
+        if (!$this->executions->contains($execution)) {
+            $this->executions[] = $execution;
+            $execution->setProvider($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExecution(Execution $execution): self
+    {
+        if ($this->executions->contains($execution)) {
+            $this->executions->removeElement($execution);
+            // set the owning side to null (unless already changed)
+            if ($execution->getProvider() === $this) {
+                $execution->setProvider(null);
+            }
         }
 
         return $this;

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Proposer ses services : {{ demand.title }}{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+            <h1>Proposer mes services :</h1>
+            <p>Vous allez proposer vos services pour l'annonce <strong>{{ demand.title }}</strong> déposée par <strong>{{ demand.customer.fullName }}</strong></p>
+            <p>Veuillez renseigner les informations pour la durée de la réalisation de votre service :</p>
+
+            {{ form_start(form) }}
+            <div class="alert alert-light">
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(form.startDate) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.enDate) }}
+                    </div>
+                </div>
+
+                <h4>Montant de la réalisation : ... &euro; | <a href="#">Détails</a></h4>
+
+                <h2>Vous avez un commentaire, une question ?</h2>
+                    {{ form_row(form.comment) }}
+
+                <button type="submit" class="btn btn-success">Envoyer</button>
+
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    {% endblock %}
+{% endblock %}

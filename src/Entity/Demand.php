@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -36,6 +38,16 @@ class Demand
      * @ORM\JoinColumn(nullable=false)
      */
     private $customer;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Execution", mappedBy="Demand")
+     */
+    private $executions;
+
+    public function __construct()
+    {
+        $this->executions = new ArrayCollection();
+    }
 
 
 
@@ -76,6 +88,37 @@ class Demand
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Execution[]
+     */
+    public function getExecutions(): Collection
+    {
+        return $this->executions;
+    }
+
+    public function addExecution(Execution $execution): self
+    {
+        if (!$this->executions->contains($execution)) {
+            $this->executions[] = $execution;
+            $execution->setDemand($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExecution(Execution $execution): self
+    {
+        if ($this->executions->contains($execution)) {
+            $this->executions->removeElement($execution);
+            // set the owning side to null (unless already changed)
+            if ($execution->getDemand() === $this) {
+                $execution->setDemand(null);
+            }
+        }
 
         return $this;
     }
