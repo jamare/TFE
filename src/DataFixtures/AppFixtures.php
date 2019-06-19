@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Customer;
 use App\Entity\Demand;
 use App\Entity\Execution;
@@ -128,6 +129,17 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                           ->setComment($comment);
 
                 $manager->persist($execution);
+
+                // Gestion des commentaires et niveau de satisfaction sur le prestataire
+                if(mt_rand(0,1)){
+                    $comment = new Comment();
+                    $comment->setContent($faker->paragraph())
+                            ->setRating(mt_rand(1,5))
+                            ->setAuthor($customer)
+                            ->setProvider($performer);
+
+                    $manager->persist($comment);
+                }
 
             }
 

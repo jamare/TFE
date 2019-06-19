@@ -52,10 +52,16 @@ class Provider extends User
      */
     private $executions;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="provider", orphanRemoval=true)
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->Service = new ArrayCollection();
         $this->executions = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,5 +160,49 @@ class Provider extends User
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setProvider($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getProvider() === $this) {
+                $comment->setProvider(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAvgRatings(){
+        // calcul de la somme des avis
+        // array_reduce pour réduire le tableau de note à une seule valeur
+        $sum = array_reduce($this->comments->toArray(), function ($total, $comment){
+            return $total + $comment->getRating();
+        },0);
+
+        // calcul de la moyenne
+        if(count($this->comments) > 0) return $sum / count($this->comments);
+
+        return 0;
     }
 }

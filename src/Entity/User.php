@@ -81,9 +81,12 @@ abstract class User implements UserInterface
      */
     private $userRoles;
 
+
+
     public function __construct()
     {
         $this->userRoles = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -233,4 +236,6 @@ abstract class User implements UserInterface
 
         return $this;
     }
+
+
 }

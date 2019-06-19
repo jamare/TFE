@@ -9,6 +9,7 @@ use App\Entity\Provider;
 use App\Form\AccountType;
 use App\Form\AccountUserType;
 use App\Form\PasswordUpdateType;
+use App\Repository\ProviderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -118,5 +119,42 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    /**
+     * Permet d'afficher la liste des propositions de services en cours.
+     *
+     * @Route("/profile/executions", name="profile_executions")
+     *
+     * @return Response
+     */
+    public function executions(){
+        return $this->render('profile/executions.html.twig');
+    }
 
+    /**
+     * Permet d'afficher la liste des prestataires
+     *
+     * @Route("profile/listpro", name="profile_listpro")
+     */
+    public function listProvider(ProviderRepository $repo){
+        $providers = $repo->findAll();
+        return $this->render('profile/listpro.html.twig',[
+            'providers' => $providers
+        ]);
+
+    }
+
+    /**
+     * Permet d'afficher les détails du prestataire
+     *
+     * @Route("/profile/provider_show/{id}", name="provider_show")
+     *
+     * @return Response
+     *
+     */
+    public function providerShow(provider $provider){
+        return $this->render("profile/detailspro.html.twig",[
+            'provider' => $provider
+        ]);
+    }
 }
+

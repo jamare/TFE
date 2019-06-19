@@ -1,0 +1,11 @@
+<div class="rating">
+
+    {%  for i in 1..5 %} {# Boucle de 1 à 5 por l'affichage des étoiles de stafisfaction #}
+        {% if i <= rating %}
+            <i class="icon_star voted"></i> {# affichage des icônes pleines ( note demandeur) #}
+        {% else %}
+            <i class="icon_star"></i> {# affichage des icônes vides #}
+        {% endif %}
+    {%  endfor%}
+
+</div>

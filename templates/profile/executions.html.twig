@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre historique de propositions de services{% endblock %}
+
+{% block body %}
+    {% block content %}
+
+
+    <div class="sub_header_in sticky_header">
+        <div class="container">
+            <h1>Mes propositions de services</h1>
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /sub_header -->
+
+    <main>
+        <div class="container margin_60_35">
+            <div class="box_booking">
+
+        {% for execution in app.user.executions %}
+                <div class="strip_booking">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2">
+                            <div class="date">
+                                <span class="month">Proposition n° {{ execution.id }}</span>
+                                <span class="day">Image</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-5">
+                            <h3>{{ execution.demand.title }}</h3>
+                            <h3>Demandeur : {{ execution.demand.customer.fullName }}</h3>
+                        </div>
+                        <div class="col-lg-2 col-md-3">
+                            <ul class="info_booking">
+
+                                <li><strong>Du</strong> {{execution.startDate|date('d/m/y')}} <strong>au</strong> {{execution.enDate|date('d/m/y') }}</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-2 col-md-2">
+                            <div class="booking_buttons">
+                                <a href="{{ path('execution_show', {'id':execution.id}) }}" class="btn_2">Info</a>
+                                <a href="#0" class="btn_3">Supprimer</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row -->
+                </div>
+        {% endfor %}
+
+                {#{% for execution in app.user.executions %}#}
+                    {#<div class="row mt-3">#}
+                        {#<div class="col-4">#}
+                            {#// image de la demande //#}
+                        {#</div>#}
+                        {#<div class="col-8">#}
+                            {#<h4>{{ execution.demand.title }}</h4>#}
+                            {#<p>#}
+                                {#Proposition n°{{ execution.id }}<br>#}
+                                {#Du {{execution.startDate|date('d/m/y')}} au {{execution.enDate|date('d/m/y') }}#}
+                            {#</p>#}
+                            {#<a href="{{ path('execution_show', {'id':execution.id}) }}" class="btn btn-info">Plus d'informations</a>#}
+                        {#</div>#}
+
+                    {#</div>#}
+                {#{% endfor %}#}
+
+
+            </div>
+            <!-- /box_booking -->
+            {#<p class="text-right"><a href="checkout.html" class="btn_1">Checkout</a></p>#}
+        </div>
+        <!-- /container -->
+    </main>
+    <!--/main-->
+
+
+</div>
+<!-- page -->
+    {% endblock %}
+{% endblock %}

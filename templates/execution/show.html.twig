@@ -4,10 +4,17 @@
 
 {% block body %}
 
-
     {% block content %}
         <div class="container">
             <h1>Votre proposition de service n° {{ execution.id }}</h1>
+
+                {#{% if app.request.query.get('withAlert') %}#}
+                    {#<div class="alert alert-success">#}
+                       {#<p>Félicitation, vos services ont été proposés à {{ execution.demand.customer.fullName }} !!</p>#}
+                    {#</div>#}
+
+                {#{% endif %}#}
+
                 <div class="row">
                     <div class="col">
                         <div class="alert alert-light">

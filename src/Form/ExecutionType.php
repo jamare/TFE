@@ -30,8 +30,10 @@ class ExecutionType extends AbstractType
             ))
             ->add('comment', TextareaType::class, array(
                 'label' => ' ',
+                'required' => false,
                 'attr' => array(
                     'placeholder' => 'Placez votre commentaire pour le demandeur ...'
+
                 ),
             ))
 

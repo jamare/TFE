@@ -1,23 +1,11 @@
 <header class="header menu_fixed">
     <div id="logo">
         <a href="{{ path('home') }}" title="Sparker - Directory and listings template">
-            <img src="{{ asset('assets/img/logo.svg') }}" width="165" height="35" alt="" class="logo_normal">
-            <img src="{{ asset('assets/img/logo_sticky.svg') }}" width="165" height="35" alt="" class="logo_sticky">
+            <img src="{{ asset('assets/img/logo_png_white.png') }}" width="211" height="53" alt="" class="logo_normal">
+            <img src="{{ asset('assets/img/logo_png_blue.png') }}" width="211" height="53" alt="" class="logo_sticky">
         </a>
     </div>
-    <ul id="top_menu">
 
-        {% if app.user %}
-            <li><a href="{{ path('demands_create') }}" class="btn btn-success">Créer un annonce</a></li>
-            <li><a href="{{ path('account_profile') }}" class="btn_add">Mon compte</a></li>
-            <li><a href="{{ path('account_logout') }}" id="log-out" class="icon-logout" title="Se déconnecter"></a></li>
-        {% else %}
-            <li><a href="{{ path('register_temp') }}" class="btn_add">S'inscrire</a></li>
-            <li><a href="{{ path('account_login') }}" id="sign-in" class="login" title="Se connecter"></a></li>
-        {% endif %}
-
-
-    </ul>
     <!-- /top_menu -->
     <a href="#menu" class="btn_mobile">
         <div class="hamburger hamburger--spin" id="hamburger">
@@ -29,16 +17,17 @@
     <nav id="menu" class="main-menu">
         <ul>
             <li><span><a href="{{ path('home') }}">Accueil</a></span>
-                <!--<ul>
-                    <li><a href="index.html">Home version 1</a></li>
-                    <li><a href="index-2.html">Home version 2</a></li>
-                    <li><a href="index-3.html">Home version 3</a></li>
-                    <li><a href="index-4.html">Home version 4</a></li>
-                    <li><a href="index-5.html">Home version 5</a></li>
-                    <li><a href="index-6.html">Home version 6 (GDPR)</a></li>
-                </ul>-->
+                {#<ul>#}
+                    {#<li><a href="index.html">Home version 1</a></li>#}
+                    {#<li><a href="index-2.html">Home version 2</a></li>#}
+                    {#<li><a href="index-3.html">Home version 3</a></li>#}
+                    {#<li><a href="index-4.html">Home version 4</a></li>#}
+                    {#<li><a href="index-5.html">Home version 5</a></li>#}
+                    {#<li><a href="index-6.html">Home version 6 (GDPR)</a></li>#}
+                {#</ul>#}
             </li>
             <li><span><a href="{{ path('demands_index') }}">Liste des annonces</a></span>
+            <li><span><a href="{{ path('profile_listpro') }}">Prestataires</a></span>
                 <!--<ul>
                     <li>
                         <span><a href="#0">Grid Layout</a></span>
@@ -74,6 +63,28 @@
                     <li><a href="confirm.html">Confirm</a></li>
                 </ul>-->
             </li>
+
+
+
+                {% if app.user %}
+                    <li><a href="{{ path('demands_create') }}" class="btn btn-success">Créer un annonce</a></li>
+                    <li><a href="{{ path('account_profile') }}" class="btn btn-info">Mon compte</a>
+                        <ul>
+                            <li>
+                                <a href="{{ path('profile_executions') }}">Mes Services</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('account_logout') }}" id="log-out" class="icon-logout" title="Se déconnecter">Se déconnecter</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                {% else %}
+                    <li><a href="{{ path('register_temp') }}" class="btn_add">S'inscrire</a></li>
+                    <li><a href="{{ path('account_login') }}" class="login"></a>Se Connecter</li>
+                {% endif %}
+
 
 
         </ul>

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des prestaires{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+            <h1>Liste des prestaires</h1>
+            {% for provider in providers %}
+                <h2>{{ provider.name }}</h2>
+                    {% if provider.comments|length >0 %}
+                        {% include 'partials/rating.html.twig' with {'rating': provider.avgRatings} %}
+                    {% else %}
+                        <small>Pas encore noté</small>
+                    {% endif %}
+
+                {% for category in provider.service %}
+                    <h4>{{ category.name }}</h4>
+                {% endfor %}
+
+                {#{% set url = path('provider_show',{'id':provider.id}) %}#}
+                    {#<a href="{{ url }}" class="btn btn-success">Détails</a>#}
+                <a href="#" class="btn btn-success">Détails</a>
+            {% endfor %}
+        </div>
+
+    {% endblock %}
+{% endblock %}
