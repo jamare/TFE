@@ -1,0 +1,39 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des demandes{% endblock %}
+
+{% block body %}
+     {% block content %}
+        <div class="container-fluid">
+            <h1 class="my-5">Gestion des demandes</h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Prestataires</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for demand in demands %}
+                    <tr>
+                        <td>{{ demand.id }}</td>
+                        <td>{{ demand.title }}</td>
+                        <td>{{ demand.customer.fullName }}</td>
+                        <td>{{ demand.executions | length }}</td>
+                        {#<td>{{ demand.avgRatings }}</td>#}
+                        <td>
+                            <a href="{{ path('admin_demands_edit', {'id':demand.id}) }}">Edit</a> | <a href="{{ path('admin_demands_delete',{'id': demand.id}) }}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+     {% endblock %}
+{% endblock %}

@@ -31,25 +31,24 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
 
         $faker= Factory::create('fr_FR');
 
-        /*$adminRole = new Role();
+        $adminRole = new Role();
         $adminRole->setTitle('ROLE_ADMIN');
         $manager->persist($adminRole);
 
         $adminUser = new Customer();
         $randCP = rand(1,self::AMOUNT_CP);
         $adminUser->setName('Jamar')
-                  ->setFirstName('Eric')
-                  ->setAddress('rue lieutenant simon 5')
-                  ->setPostalCode($this->getReference('cp_'.$randCP))
-                  ->setLocality($this->getReference('locality_'.$randCP.'_'.rand(1,self::AMOUNT_LOCALITY)))
-                  ->setEmail('the_real_magnatt@hotmail.com')
-                  ->setPhone('0476777275')
-                  ->setPassword($this->encoder->encodePassword($adminUser, 'password'))
-                  ->setRegistration($faker->dateTimeBetween('-365 days', '-1 days'))
-                  ->setBanished(false)
-                  ->addUserRole($adminRole);
-
-        $manager->persist($adminUser);*/
+            ->setFirstName('Eric')
+            ->setAddress('rue lieutenant simon 5')
+            ->setPostalCode($this->getReference('cp_'.$randCP))
+            ->setLocality($this->getReference('locality_'.$randCP.'_'.rand(1,self::AMOUNT_LOCALITY)))
+            ->setEmail('the_real_magnatt@hotmail.com')
+            ->setPhone('0476777275')
+            ->setPassword($this->encoder->encodePassword($adminUser, 'password'))
+            ->setRegistration($faker->dateTimeBetween('-365 days', '-1 days'))
+            ->setBanished(false)
+            ->addSiteRole($adminRole);
+        $manager->persist($adminUser);
 
 
         $providers = [];

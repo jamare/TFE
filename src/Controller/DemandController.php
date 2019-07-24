@@ -33,6 +33,8 @@ class DemandController extends AbstractController
      *
      * @Route("/demands/new", name="demands_create")
      *
+     * @IsGranted("ROLE_USER")
+     *
      * @return Response
      */
     public function create(Request $request, ObjectManager $manager){
@@ -112,6 +114,7 @@ class DemandController extends AbstractController
      * Permet de supprimer une annonce
      *
      * @Route("/demands/{id}/delete", name="demands_delete")
+     * @Security("is_granted('ROLE_USER') and user == demand.getCustomer()", message="Vous n'avez pas le droit d'accéder à cette ressource")
      *
      * @param Demand $demand
      * @param ObjectManager $manager

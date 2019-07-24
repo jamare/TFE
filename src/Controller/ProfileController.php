@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ProfileController extends AbstractController
 {
@@ -24,13 +25,12 @@ class ProfileController extends AbstractController
      * Permet d'afficher et de traiter les formulaires de modification de profil : Customer & Provider
      *
      * @Route("/profile", name="account_profile")
-     *
+     * @IsGranted("ROLE_USER")
      * @return Response
      */
     public function profile(Request $request, ObjectManager $manager)
     {
         $user = $this->getUser();
-
 
         if($user instanceof Provider){
             $form = $this->createForm(AccountType::class, $user);
@@ -48,7 +48,7 @@ class ProfileController extends AbstractController
             }
 
             return $this->render('profile/profile.html.twig',[
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]);
         }
         elseif ($user instanceof Customer){
@@ -68,7 +68,9 @@ class ProfileController extends AbstractController
             }
 
             return $this->render('profile/profile_user.html.twig',[
-                'form' => $form->createView()
+                'form' => $form->createView(),
+
+                'user' => $user
             ]);
 
         }
@@ -80,6 +82,7 @@ class ProfileController extends AbstractController
      * Fonction de modification de mot de pass
      *
      * @Route("/account/password-update", name="account_password")
+     * @IsGranted("ROLE_USER")
      *
      * @return Response
      */

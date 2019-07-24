@@ -1,0 +1,41 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des commentaires sur les prestataires{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container-fluid">
+            <h1 class="my-5">Gestion des commentaires ( prestataires )</h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Auteur</th>
+                        <th>Date de création</th>
+                        <th>Prestataire concerné</th>
+                        <th>Note</th>
+                        <th>Commentaire</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for comment in comments %}
+                    <tr>
+                        <td>{{ comment.id }}</td>
+                        <td>{{ comment.author.fullName }}</td>
+                        <td>{{ comment.createdAt | date('d/m/Y H:i') }}</td>
+                        <td>{{ comment.provider.name }}</td>
+                        <td>{{ comment.rating }}</td>
+                        <td>{{ comment.content }}</td>
+                        <td>
+                            <a href="#">Edit</a> | <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% endblock %}
+{% endblock %}

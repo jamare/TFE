@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
@@ -79,15 +80,13 @@ abstract class User implements UserInterface
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Role", mappedBy="users")
      */
-    private $userRoles;
-
-
+    private $siteRoles;
 
     public function __construct()
     {
-        $this->userRoles = new ArrayCollection();
-
+        $this->siteRoles = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -192,8 +191,16 @@ abstract class User implements UserInterface
 
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        $roles = $this->siteRoles->map(function($role){
+            return $role->getTitle();
+        })->toArray();
 
+        $roles[] = 'ROLE_USER';
+
+        /*dump($roles);
+        die();*/
+
+        return $roles;
     }
 
     public function getSalt(){
@@ -212,30 +219,34 @@ abstract class User implements UserInterface
     /**
      * @return Collection|Role[]
      */
-    public function getUserRoles(): Collection
+    public function getSiteRoles(): Collection
     {
-        return $this->userRoles;
+        return $this->siteRoles;
     }
 
-    public function addUserRole(Role $userRole): self
+    public function addSiteRole(Role $siteRole): self
     {
-        if (!$this->userRoles->contains($userRole)) {
-            $this->userRoles[] = $userRole;
-            $userRole->addUser($this);
+        if( is_null( $this->siteRoles)){
+            $this->siteRoles = new ArrayCollection();
+
+        }
+        if (!$this->siteRoles->contains($siteRole)) {
+            $this->siteRoles[] = $siteRole;
+            $siteRole->addUser($this);
+        }
+
+        return $this;
+
+    }
+
+    public function removeSiteRole(Role $siteRole): self
+    {
+        if ($this->siteRoles->contains($siteRole)) {
+            $this->siteRoles->removeElement($siteRole);
+            $siteRole->removeUser($this);
         }
 
         return $this;
     }
-
-    public function removeUserRole(Role $userRole): self
-    {
-        if ($this->userRoles->contains($userRole)) {
-            $this->userRoles->removeElement($userRole);
-            $userRole->removeUser($this);
-        }
-
-        return $this;
-    }
-
 
 }

@@ -29,7 +29,7 @@
                                     <dt class="col-md-4">Montant :</dt>
                                     <dt class="col-md-8">{{ execution.amount }} &euro;</dt>
                                     <dt class="col-md-4">Commentaire :</dt>
-                                    <dt class="col-md-8">{{ execution.comment }}</dt>
+                                    <dt class="col-md-8">{{ execution.comment | default('Aucun commentaire')}}</dt>
                                 </dl>
                             <hr>
 
@@ -44,6 +44,15 @@
                                 <div class="col-9">
                                     <h4><a href="{{ path('user_show', {'id': execution.demand.customer.id}) }}">{{ execution.demand.customer.fullName }}</a></h4>
                                     <span class="badge badge-primary">{{ execution.demand.customer.demands|length }} annonce(s)</span>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="alert alert-light">
+
+                                        <h3 class="alert-heading">Laissez nous un commentaire sur le prestataire</h3>
+
                                 </div>
                             </div>
                         </div>
