@@ -42,7 +42,8 @@
                                 </div>
 
                                 <div class="col-9">
-                                    <h4><a href="{{ path('user_show', {'id': execution.demand.customer.id}) }}">{{ execution.demand.customer.fullName }}</a></h4>
+                                    <h4><a href="#">{{ execution.demand.customer.fullName }}</a></h4>
+                                    {#<h4><a href="{{ path('user_show', {'id': execution.demand.customer.id}) }}">{{ execution.demand.customer.fullName }}</a></h4>#}
                                     <span class="badge badge-primary">{{ execution.demand.customer.demands|length }} annonce(s)</span>
                                 </div>
 
@@ -50,9 +51,27 @@
 
                             <div class="row">
                                 <div class="alert alert-light">
+                                    {#{% if is_granted('ROLE_ADMIN') %}#}
 
-                                        <h3 class="alert-heading">Laissez nous un commentaire sur le prestataire</h3>
+                                     <h3 class="alert-heading">Laissez nous un commentaire sur le prestataire</h3>
+                                        {%  if date() > date(execution.enDate) %}
+                                            {% set comment = execution.provider.commentFromAuthor(app.user) %}
+                                            {% if comment is not null %}
+                                                <blockquote>
+                                                    {{ comment.content }}
+                                                </blockquote>
+                                                <strong>Note :</strong> {% include 'partials/rating.html.twig' with {'rating': comment.rating}%}
+                                            {% else %}
+                                                {{ form_start(form) }}
+                                                {{ form_widget(form) }}
+                                                <button type="submit" class="btn btn-success">Confirmer !</button>
+                                                {{ form_end(form) }}
+                                            {% endif %}
 
+                                        {% else %}
+                                            <p>Vous ne pouvez pas commenter ce service tant qu'il n'est pas complètement exécuté !</p>
+                                        {% endif %}
+                                    {#{% endif %}#}
                                 </div>
                             </div>
                         </div>

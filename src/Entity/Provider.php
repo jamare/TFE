@@ -193,6 +193,24 @@ class Provider extends User
         return $this;
     }
 
+    /**
+     * Permet de récupérer le commentaire d'un auteur par rapport à un provider
+     *
+     * @param User $author
+     * @return Comment|null
+     */
+    public function getCommentFromAuthor(User $author){
+        foreach($this->comments as $comment){
+            if($comment->getAuthor() === $author) return $comment;
+        }
+        return null;
+    }
+
+    /**
+     * Permet d'obtenir la moyenne globale des notes pour ce provider
+     *
+     * @return float|int
+     */
     public function getAvgRatings(){
         // calcul de la somme des avis
         // array_reduce pour réduire le tableau de note à une seule valeur

@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Demand;
 use App\Entity\Execution;
+use App\Form\CommentType;
 use App\Form\ExecutionType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,11 +50,34 @@ class ExecutionController extends AbstractController
      * @Route("/execution/{id}", name="execution_show")
      *
      * @param Execution $execution
+     * @param Request $request
+     * @param ObjectManager $manager
      * @return Response
      */
-    public function show(Execution $execution){
+    public function show(Execution $execution, Request $request, ObjectManager $manager){
+
+        $comment = new Comment();
+
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $comment->setProvider($execution->getProvider())
+                    ->setAuthor($this->getUser());
+
+            $manager->persist($comment);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "Votre commentaire a bien été enregistré !"
+            );
+        }
+
         return $this->render('execution/show.html.twig', [
-            'execution' => $execution
+            'execution' => $execution,
+            'form' => $form->createView()
         ]);
     }
 }
