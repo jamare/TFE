@@ -1,0 +1,35 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des executions de services{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container-fluid">
+            <h1 class="my-5">Gestion des exécutions de services</h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Date</th>
+                        <th>Prestataire</th>
+                        <th>Demande</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for execution in executions %}
+                    <tr>
+                        <td>{{ execution.id }}</td>
+                        <td>{{ execution.createdAt|date('d/m/Y H:i') }}</td>
+                        <td>{{ execution.provider.name }}</td>
+                        <td>{{ execution.demand.title }}</td>
+                        <td>
+                            <a href="{{ path('admin_execution_edit',{"id":execution.id}) }}">Edit</a> | <a href="{{ path('admin_execution_delete',{"id":execution.id}) }}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+{% endblock %}

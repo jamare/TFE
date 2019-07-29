@@ -44,6 +44,10 @@ class ExecutionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Execution::class,
+            'validation_groups' => [
+                'Default',
+                'front'
+            ]
         ]);
     }
 }

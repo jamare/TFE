@@ -27,7 +27,7 @@
                                     <dt class="col-md-4">Date de fin :</dt>
                                     <dt class="col-md-8">{{ execution.enDate | date('d/m/Y') }}</dt>
                                     <dt class="col-md-4">Montant :</dt>
-                                    <dt class="col-md-8">{{ execution.amount }} &euro;</dt>
+                                    <dt class="col-md-8">{{ execution.amount | number_format(2, ',', ' ')}} &euro;</dt>
                                     <dt class="col-md-4">Commentaire :</dt>
                                     <dt class="col-md-8">{{ execution.comment | default('Aucun commentaire')}}</dt>
                                 </dl>
@@ -37,11 +37,11 @@
 
                             <div class="row">
 
-                                <div class="col-3">
+                                <div class="col-md-3">
                                     Photo du demandeur {# photo, avatar du demandeur#}
                                 </div>
 
-                                <div class="col-9">
+                                <div class="col-md-9">
                                     <h4><a href="#">{{ execution.demand.customer.fullName }}</a></h4>
                                     {#<h4><a href="{{ path('user_show', {'id': execution.demand.customer.id}) }}">{{ execution.demand.customer.fullName }}</a></h4>#}
                                     <span class="badge badge-primary">{{ execution.demand.customer.demands|length }} annonce(s)</span>

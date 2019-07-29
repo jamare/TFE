@@ -1,0 +1,25 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Modification de l'execution de service n°{{ execution.id }}{% endblock %}
+{% block body %}
+    {% block content %}
+        <div class="container-fluid">
+            <h1 class="my-5">Modifier la réservation n°{{ execution.id }}</h1>
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.startDate) }}
+                    {{ form_row(form.enDate) }}
+                    {{ form_row(form.comment) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.provider) }}
+                    {{ form_row(form.Demand) }}
+                    <button type="submit" class="btn btn-success">
+                        Enregistrez les modifications
+                    </button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    {% endblock %}
+{% endblock %}
