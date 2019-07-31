@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des demandeurs{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container-fluid0">
+            <h1 class="my-5">Gestion des demandeurs</h1>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Adresse</th>
+                    <th>Code Postal</th>
+                    <th>Localité</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer.id }}</td>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.firstName }}</td>
+                        <td>{{ customer.address }}</td>
+                        <td>{{ customer.PostalCode }}</td>
+                        <td>{{ customer.locality }}</td>
+                        <td>{{ customer.phone }}</td>
+                        <td>{{ customer.email }}</td>
+                        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% include 'admin/partials/pagination.html.twig' with {'route': 'admin_customers_index'} %}
+        </div>
+    {% endblock %}
+{% endblock %}

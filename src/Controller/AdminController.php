@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Demand;
 use App\Form\DemandType;
 use App\Repository\DemandRepository;
+use App\Utils\Pagination;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,12 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin/demands", name="admin_demands_index")
+     * @Route("/admin/demands/{page}", name="admin_demands_index", requirements={"page": "\d+"})
      */
-    public function index(DemandRepository $repo)
+    public function index(DemandRepository $repo, $page = 1, Pagination $pagination)
     {
+
+       $pagination->setEntityClass(Demand::class)
+                  ->setPage($page);
+
         return $this->render('admin/demand/index.html.twig', [
-                'demands' => $repo->findAll()
+                'demands' => $pagination->getData(),
+                'pages' => $pagination->getPages(),
+                'page' => $page
         ]);
     }
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Execution;
 use App\Form\AdminExecutionType;
 use App\Repository\ExecutionRepository;
+use App\Utils\Pagination;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,12 +15,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminExecutionController extends AbstractController
 {
     /**
-     * @Route("/admin/executions", name="admin_executions_index")
+     * @Route("/admin/executions/{page}", name="admin_executions_index", requirements={"page": "\d+"})
      */
-    public function index(ExecutionRepository $repo)
+    public function index(ExecutionRepository $repo, $page = 1, Pagination $pagination)
     {
+        $pagination->setEntityClass(Execution::class)
+                   ->setPage($page);
+
         return $this->render('admin/execution/index.html.twig', [
-            'executions' => $repo->findAll(),
+            'executions' => $pagination->getData(),
+            'pages' => $pagination->getPages(),
+            'page' => $page
         ]);
     }
 

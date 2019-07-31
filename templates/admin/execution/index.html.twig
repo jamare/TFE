@@ -30,6 +30,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% include 'admin/partials/pagination.html.twig' with {'route': 'admin_executions_index'} %}
         </div>
     {% endblock %}
 {% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des prestataires{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container-fluid0">
+            <h1 class="my-5">Gestion des prestataires</h1>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Entreprise</th>
+                            <th>Adresse</th>
+                            <th>Code Postal</th>
+                            <th>Localité</th>
+                            <th>Téléphone</th>
+                            <th>Email</th>
+                            <th>Web</th>
+                            <th>Numéro de TVA</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for provider in providers %}
+                        <tr>
+                           <td>{{ provider.id }}</td>
+                           <td>{{ provider.name }}</td>
+                           <td>{{ provider.address }}</td>
+                           <td>{{ provider.PostalCode }}</td>
+                           <td>{{ provider.locality }}</td>
+                           <td>{{ provider.phone }}</td>
+                           <td>{{ provider.email }}</td>
+                           <td>{{ provider.web }}</td>
+                           <td>{{ provider.tva }}</td>
+                            <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% include 'admin/partials/pagination.html.twig' with {'route': 'admin_providers_index'} %}
+        </div>
+    {% endblock %}
+{% endblock %}
