@@ -17,63 +17,28 @@
     <nav id="menu" class="main-menu">
         <ul>
             <li><span><a href="{{ path('home') }}">Accueil</a></span>
-                {#<ul>#}
-                    {#<li><a href="index.html">Home version 1</a></li>#}
-                    {#<li><a href="index-2.html">Home version 2</a></li>#}
-                    {#<li><a href="index-3.html">Home version 3</a></li>#}
-                    {#<li><a href="index-4.html">Home version 4</a></li>#}
-                    {#<li><a href="index-5.html">Home version 5</a></li>#}
-                    {#<li><a href="index-6.html">Home version 6 (GDPR)</a></li>#}
-                {#</ul>#}
+
             </li>
             <li><span><a href="{{ path('demands_index') }}">Liste des annonces</a></span>
             <li><span><a href="{{ path('profile_listpro') }}">Prestataires</a></span>
-                <!--<ul>
-                    <li>
-                        <span><a href="#0">Grid Layout</a></span>
-                        <ul>
-                            <li><a href="grid-listings-filterscol-search-aside.html">Sidebar+Search mobile 1</a></li>
-                            <li><a href="grid-listings-filterstop-search-aside.html">Full+Search mobile 1</a></li>
-                            <li><a href="grid-listings-filterscol.html">Sidebar+Search mobile 2</a></li>
-                            <li><a href="grid-listings-filterstop.html">Full+Search mobile 2</a></li>
-                            <li><a href="grid-listings-isotope.html">Full+Isotope filter</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span><a href="#0">Row Layout</a></span>
-                        <ul>
-                            <li><a href="row-listings-filterscol-search-aside.html">Sidebar+Search mobile 1</a></li>
-                            <li><a href="row-listings-filterstop-search-aside.html">Full+Search mobile 1</a></li>
-                            <li><a href="row-listings-filterscol.html">Sidebar+Search mobile 2</a></li>
-                            <li><a href="row-listings-filterstop.html">Full+Search mobile 2</a></li>
-                            <li><a href="row-listings-isotope.html">Full+Isotope filter</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="listing-map.html">Listing Map</a></li>
-                    <li>
-                        <span><a href="#0">Detail pages</a></span>
-                        <ul>
-                            <li><a href="detail-hotel.html">Detail page 1</a></li>
-                            <li><a href="detail-restaurant.html">Detail page 2</a></li>
-                            <li><a href="detail-shop.html">Detail page 3</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="bookings.html">Bookings - Purchases</a></li>
-                    <li><a href="checkout.html">Checkout</a></li>
-                    <li><a href="confirm.html">Confirm</a></li>
-                </ul>-->
+
             </li>
 
-
-
                 {% if app.user %}
-                    <li><a href="{{ path('demands_create') }}" class="btn btn-success">Créer un annonce</a></li>
+                    {% if is_granted('ROLE_CUSTOMER') %}
+                        <li><a href="{{ path('demands_create') }}" class="btn btn-success">Créer un annonce</a></li>
+                    {% endif %}
                     <li><a href="{{ path('account_profile') }}" class="btn btn-info">Mon compte</a>
                         <ul>
                             <li>
-
-                                <a href="{{ path('profile_executions') }}">Mes Services</a>
-
+                                {% if is_granted('ROLE_CUSTOMER') %}
+                                    <a href="#">Mes demandes</a>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if is_granted('ROLE_PROVIDER') %}
+                                    <a href="{{ path('profile_executions') }}">Mes Services</a>
+                                {% endif %}
                             </li>
                             <li>
                                 <a href="{{ path('account_logout') }}" id="log-out" class="icon-logout" title="Se déconnecter">Se déconnecter</a>

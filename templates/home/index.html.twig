@@ -8,9 +8,9 @@
     <div class="container margin_60_35">
         <div class="main_title_3">
             <span></span>
-            <h2>Famous Shops</h2>
+            <h2>Les dernières demandes</h2>
             <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
-            <a href="grid-listings-filterscol.html">See all</a>
+            <a href="{{ path('demands_index') }}">Toutes les demandes</a>
         </div>
         <div class="row add_bottom_30">
             <div class="col-lg-3 col-sm-6">
@@ -23,142 +23,37 @@
                     </figure>
                 </a>
             </div>
-            <div class="col-lg-3 col-sm-6">
-                <a href="detail-shop.html" class="grid_item small">
-                    <figure>
-                        <img src="{{  asset('assets/img/shop_2.jpg') }}" alt="">
-                        <div class="info">
-                            <h3>Louis Vuitton</h3>
-                        </div>
-                    </figure>
-                </a>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <a href="detail-shop.html" class="grid_item small">
-                    <figure>
-                        <img src="{{  asset('assets/img/shop_3.jpg') }}" alt="">
-                        <div class="info">
-                            <h3>Burberry</h3>
-                        </div>
-                    </figure>
-                </a>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <a href="detail-shop.html" class="grid_item small">
-                    <figure>
-                        <img src="{{  asset('assets/img/shop_4.jpg') }}" alt="">
-                        <div class="info">
-                            <h3>Pinko</h3>
-                        </div>
-                    </figure>
-                </a>
-            </div>
+
+
         </div>
         <!-- /row -->
 
         <div class="main_title_3">
             <span></span>
-            <h2>Popular Hotels</h2>
-            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
-            <a href="grid-listings-filterscol.html">See all</a>
+            <h2>Les prestataires les mieux notés</h2>
+            <p></p>
+            <a href="{{ path('profile_listpro') }}">Tous les prestataires</a>
         </div>
         <div class="row add_bottom_30">
+            {% for data in providers %}
             <div class="col-lg-3 col-sm-6">
                 <a href="detail-hotel.html" class="grid_item small">
                     <figure>
                         <img src="{{  asset('assets/img/hotel_1.jpg') }}" alt="">
                         <div class="info">
-                            <div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
-                            <h3>Hotel Mariott</h3>
+                            {#<div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>#}
+                            <strong>{% include 'partials/rating.html.twig' with {'rating' : data.provider.avgRatings} %}</strong>
+                            <h3>{{ data.provider.name }} - x réalisations</h3>
                         </div>
                     </figure>
                 </a>
             </div>
-            <div class="col-lg-3 col-sm-6">
-                <a href="detail-hotel.html" class="grid_item small">
-                    <figure>
-                        <img src="{{  asset('assets/img/hotel_2.jpg') }}" alt="">
-                        <div class="info">
-                            <div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
-                            <h3>Hotel Concorde</h3>
-                        </div>
-                    </figure>
-                </a>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <a href="detail-hotel.html" class="grid_item small">
-                    <figure>
-                        <img src="{{  asset('assets/img/hotel_3.jpg') }}" alt="">
-                        <div class="info">
-                            <div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
-                            <h3>Hotel La Defanse</h3>
-                        </div>
-                    </figure>
-                </a>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <a href="detail-hotel.html" class="grid_item small">
-                    <figure>
-                        <img src="{{  asset('assets/img/hotel_4.jpg') }}" alt="">
-                        <div class="info">
-                            <div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
-                            <h3>Hotel Carlton</h3>
-                        </div>
-                    </figure>
-                </a>
-            </div>
+            {% endfor %}
+
+
         </div>
         <!-- /row -->
 
-        <div class="main_title_3">
-            <span></span>
-            <h2>Top Restaurants</h2>
-            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
-            <a href="grid-listings-filterscol.html">See all</a>
-        </div>
-        <div class="row ">
-            <div class="col-lg-3 col-sm-6">
-                <a href="detail-restaurant.html" class="grid_item small">
-                    <figure>
-                        <img src="{{  asset('assets/img/restaurant_1.jpg') }}" alt="">
-                        <div class="info">
-                            <h3>Da Alfredo</h3>
-                        </div>
-                    </figure>
-                </a>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <a href="detail-restaurant.html" class="grid_item small">
-                    <figure>
-                        <img src="{{  asset('assets/img/restaurant_2.jpg') }}" alt="">
-                        <div class="info">
-                            <h3>Bistroter</h3>
-                        </div>
-                    </figure>
-                </a>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <a href="detail-restaurant.html" class="grid_item small">
-                    <figure>
-                        <img src="{{  asset('assets/img/restaurant_3.jpg') }}" alt="">
-                        <div class="info">
-                            <h3>Da Luigi</h3>
-                        </div>
-                    </figure>
-                </a>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <a href="detail-restaurant.html" class="grid_item small">
-                    <figure>
-                        <img src="{{  asset('assets/img/restaurant_4.jpg') }}" alt="">
-                        <div class="info">
-                            <h3>Marco King</h3>
-                        </div>
-                    </figure>
-                </a>
-            </div>
-        </div>
-        <!-- /row -->
     </div>
         <!-- /container -->
 

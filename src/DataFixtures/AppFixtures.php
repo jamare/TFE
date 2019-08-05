@@ -35,6 +35,14 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
         $adminRole->setTitle('ROLE_ADMIN');
         $manager->persist($adminRole);
 
+        $providerRole = new Role();
+        $providerRole->setTitle('ROLE_PROVIDER');
+        $manager->persist($providerRole);
+
+        $customerRole = new Role();
+        $customerRole->setTitle('ROLE_CUSTOMER');
+        $manager->persist($customerRole);
+
         $adminUser = new Customer();
         $randCP = rand(1,self::AMOUNT_CP);
         $adminUser->setName('Jamar')
@@ -47,11 +55,13 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             ->setPassword($this->encoder->encodePassword($adminUser, 'password'))
             ->setRegistration($faker->dateTimeBetween('-365 days', '-1 days'))
             ->setBanished(false)
-            ->addSiteRole($adminRole);
+            ->addSiteRole($adminRole)
+            ->addSiteRole($customerRole);
         $manager->persist($adminUser);
 
 
         $providers = [];
+
         // Création des prestataires
         for($i=1;$i<=10;$i++){
 
@@ -74,6 +84,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             $provider->setRegistration($faker->dateTimeBetween('-365 days', '-1 days'));
             $provider->setPassword($password);
             $provider->setBanished(false);
+            $provider->addSiteRole($providerRole);
 
             $manager->persist($provider);
 
@@ -96,7 +107,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             $customer->setRegistration($faker->dateTimeBetween('-365 days', '-1 days'));
             $customer->setPassword($password);
             $customer->setBanished(false);
-
+            $customer->addSiteRole($customerRole);
 
             $demand = new Demand();
             $demand->setTitle($faker->sentence);

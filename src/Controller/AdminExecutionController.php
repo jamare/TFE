@@ -20,6 +20,7 @@ class AdminExecutionController extends AbstractController
     public function index(ExecutionRepository $repo, $page = 1, Pagination $pagination)
     {
         $pagination->setEntityClass(Execution::class)
+                   //->setLimit(5)
                    ->setPage($page);
 
         return $this->render('admin/execution/index.html.twig', [

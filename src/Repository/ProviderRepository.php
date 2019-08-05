@@ -19,6 +19,17 @@ class ProviderRepository extends ServiceEntityRepository
         parent::__construct($registry, Provider::class);
     }
 
+    public function findBestProviders($limit){
+        return $this->createQueryBuilder('p')
+                    ->select('p as provider, AVG(c.rating) as avgRatings')
+                    ->join('p.comments', 'c')
+                    ->groupBy('p')
+                    ->orderBy('avgRatings', 'DESC')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+    }
+
     // /**
     //  * @return Provider[] Returns an array of Provider objects
     //  */

@@ -18,6 +18,11 @@ class Pagination{
     }
 
     public function getPages(){
+        // Message d'erreur simplifié pour développeurs.
+        if(empty($this->entityClass)){
+            throw new \Exception("Vous n'avez pas spécifié l'entité sur laquelle nous devons paginer !!
+            Utilisez la méthode setEntityClass() de votre objet Pagination");
+        }
         // connaître le total des enregistrements de la table
         $repo=$this->manager->getRepository($this->entityClass);
         $total = count($repo->findAll());
@@ -27,6 +32,12 @@ class Pagination{
     }
 
     public function getData(){
+        // Message d'erreur simplifié pour développeurs.
+        if(empty($this->entityClass)){
+            throw new \Exception("Vous n'avez pas spécifié l'entité sur laquelle nous devons paginer !!
+            Utilisez la méthode setEntityClass() de votre objet Pagination");
+        }
+
         // pour déterminer si on démarre à 0 ou à 10 ou 20
         $offset = $this->currentPage * $this->limit - $this->limit;
 
