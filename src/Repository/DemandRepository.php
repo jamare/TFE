@@ -19,6 +19,15 @@ class DemandRepository extends ServiceEntityRepository
         parent::__construct($registry, Demand::class);
     }
 
+    public function findLastDemands($limit){
+        return $this->createQueryBuilder('d')
+                    ->select('d as demand')
+                    ->orderBy('d.id','DESC')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+    }
+
     // /**
     //  * @return Demand[] Returns an array of Demand objects
     //  */

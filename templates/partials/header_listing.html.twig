@@ -1,0 +1,94 @@
+<header class="header_in">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-12">
+                <div id="logo">
+                    <a href="{{ path('home') }}" title="mameilleureoffre.be - Mes besoins aux meilleurs prix">
+
+                        <img src="{{ asset('assets/img/logo_png_blue.png') }}" width="211" height="53" alt="" class="logo_sticky">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-9 col-12">
+
+                <a href="#menu" class="btn_mobile">
+                    <div class="hamburger hamburger--spin" id="hamburger">
+                        <div class="hamburger-box">
+                            <div class="hamburger-inner"></div>
+                        </div>
+                    </div>
+                </a>
+                <nav id="menu" class="main-menu">
+                    <ul>
+                        <li><span><a href="{{ path('home') }}">Accueil</a></span>
+
+                        </li>
+                        <li><span><a href="{{ path('demands_index') }}">Liste des annonces</a></span>
+                        <li><span><a href="{{ path('profile_listpro') }}">Prestataires</a></span>
+
+                        </li>
+
+                        {% if app.user %}
+                            {% if is_granted('ROLE_CUSTOMER') %}
+                                <li><a href="{{ path('demands_create') }}" class="btn btn-success">Créer un annonce</a></li>
+                            {% endif %}
+                            <li><a href="{{ path('account_profile') }}" class="btn btn-info">Mon compte</a>
+                                <ul>
+                                    <li>
+                                        {% if is_granted('ROLE_CUSTOMER') %}
+                                            <a href="{{ path('profile_demands') }}">Mes demandes</a>
+                                        {% endif %}
+                                    </li>
+                                    <li>
+                                        {% if is_granted('ROLE_PROVIDER') %}
+                                            <a href="{{ path('profile_executions') }}">Mes Services</a>
+                                        {% endif %}
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('account_logout') }}" id="log-out" class="icon-logout" title="Se déconnecter">Se déconnecter</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                        {% else %}
+                            <li><a href="{{ path('register_temp') }}" class="btn_add">S'inscrire</a></li>
+                            <li><a href="{{ path('account_login') }}" class="login"></a>Se Connecter</li>
+                        {% endif %}
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+    <!-- search_mobile -->
+    <div class="layer"></div>
+    <div id="search_mobile">
+        <a href="#" class="side_panel"><i class="icon_close"></i></a>
+        <div class="custom-search-input-2">
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="What are you looking..">
+                <i class="icon_search"></i>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Where">
+                <i class="icon_pin_alt"></i>
+            </div>
+            <select class="wide">
+                <option>All Categories</option>
+                <option>Shops</option>
+                <option>Hotels</option>
+                <option>Restaurants</option>
+                <option>Bars</option>
+                <option>Events</option>
+                <option>Fitness</option>
+            </select>
+            <input type="submit" value="Search">
+        </div>
+    </div>
+    <!-- /search_mobile -->
+</header>
+<!-- /header -->

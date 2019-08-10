@@ -9,20 +9,24 @@
         <div class="main_title_3">
             <span></span>
             <h2>Les dernières demandes</h2>
-            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+            <p></p>
             <a href="{{ path('demands_index') }}">Toutes les demandes</a>
         </div>
         <div class="row add_bottom_30">
+
+            {% for data in demands %}
+                {% set url = path('demands_show',{'id':data.demand.id}) %}
             <div class="col-lg-3 col-sm-6">
-                <a href="detail-shop.html" class="grid_item small">
+                <a href="{{ url }}" class="grid_item small">
                     <figure>
                         <img src="{{  asset('assets/img/shop_1.jpg') }}" alt="">
                         <div class="info">
-                            <h3>Victoria Secretes</h3>
+                            <h3>{{ data.demand.title }}</h3>
                         </div>
                     </figure>
                 </a>
             </div>
+            {% endfor %}
 
 
         </div>
@@ -36,8 +40,10 @@
         </div>
         <div class="row add_bottom_30">
             {% for data in providers %}
+
+                {#{% set url = path('provider_show',{'id':data.provider.id}) %}#}
             <div class="col-lg-3 col-sm-6">
-                <a href="detail-hotel.html" class="grid_item small">
+                <a href="#" class="grid_item small">
                     <figure>
                         <img src="{{  asset('assets/img/hotel_1.jpg') }}" alt="">
                         <div class="info">

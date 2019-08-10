@@ -32,7 +32,7 @@
                         <ul>
                             <li>
                                 {% if is_granted('ROLE_CUSTOMER') %}
-                                    <a href="#">Mes demandes</a>
+                                    <a href="{{ path('profile_demands') }}">Mes demandes</a>
                                 {% endif %}
                             </li>
                             <li>

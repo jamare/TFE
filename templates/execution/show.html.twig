@@ -51,7 +51,7 @@
 
                             <div class="row">
                                 <div class="alert alert-light">
-                                    {#{% if is_granted('ROLE_ADMIN') %}#}
+                                    {% if is_granted('ROLE_CUSTOMER') %}
 
                                      <h3 class="alert-heading">Laissez nous un commentaire sur le prestataire</h3>
                                         {%  if date() > date(execution.enDate) %}
@@ -71,7 +71,7 @@
                                         {% else %}
                                             <p>Vous ne pouvez pas commenter ce service tant qu'il n'est pas complètement exécuté !</p>
                                         {% endif %}
-                                    {#{% endif %}#}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

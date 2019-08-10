@@ -17,8 +17,8 @@
     <main>
         <div class="container margin_60_35">
             <div class="box_booking">
-
-        {% for execution in app.user.executions %}
+        {% if app.user.executions|length >0 %}
+            {% for execution in app.user.executions %}
                 <div class="strip_booking">
                     <div class="row">
                         <div class="col-lg-2 col-md-2">
@@ -40,35 +40,21 @@
                         <div class="col-lg-2 col-md-2">
                             <div class="booking_buttons">
                                 <a href="{{ path('execution_show', {'id':execution.id}) }}" class="btn_2">Info</a>
-                                <a href="#0" class="btn_3">Supprimer</a>
+                                <a href="#" class="btn_3">Supprimer</a>
                             </div>
                         </div>
                     </div>
                     <!-- /row -->
                 </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            Aucune proposition de services en cours
+        {% endif %}
 
-                {#{% for execution in app.user.executions %}#}
-                    {#<div class="row mt-3">#}
-                        {#<div class="col-4">#}
-                            {#// image de la demande //#}
-                        {#</div>#}
-                        {#<div class="col-8">#}
-                            {#<h4>{{ execution.demand.title }}</h4>#}
-                            {#<p>#}
-                                {#Proposition n°{{ execution.id }}<br>#}
-                                {#Du {{execution.startDate|date('d/m/y')}} au {{execution.enDate|date('d/m/y') }}#}
-                            {#</p>#}
-                            {#<a href="{{ path('execution_show', {'id':execution.id}) }}" class="btn btn-info">Plus d'informations</a>#}
-                        {#</div>#}
-
-                    {#</div>#}
-                {#{% endfor %}#}
 
 
             </div>
-            <!-- /box_booking -->
-            {#<p class="text-right"><a href="checkout.html" class="btn_1">Checkout</a></p>#}
+
         </div>
         <!-- /container -->
     </main>

@@ -9,6 +9,8 @@ use App\Entity\Provider;
 use App\Form\AccountType;
 use App\Form\AccountUserType;
 use App\Form\PasswordUpdateType;
+use App\Repository\DemandRepository;
+use App\Repository\ExecutionRepository;
 use App\Repository\ProviderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -123,7 +125,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * Permet d'afficher la liste des propositions de services en cours.
+     * Permet d'afficher la liste des propositions de services en cours => provider.
      *
      * @Route("/profile/executions", name="profile_executions")
      *
@@ -131,6 +133,20 @@ class ProfileController extends AbstractController
      */
     public function executions(){
         return $this->render('profile/executions.html.twig');
+    }
+
+    /**
+     * Permet d'afficher la liste des demandes de services en cours =>customer.
+     *
+     * @Route("/profile/demands", name="profile_demands")
+     *
+     * @return Response
+     */
+    public function demands(ExecutionRepository $repo){
+        $executions = $repo->findAll();
+        return $this->render('profile/demands.html.twig',[
+            'executions' => $executions
+        ]);
     }
 
     /**
