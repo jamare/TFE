@@ -10,7 +10,9 @@ use App\Form\RegistrationType;
 use App\Form\RegistrationUserType;
 use App\Utils\Mailer;
 use Doctrine\Common\Persistence\ObjectManager;
+use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -183,6 +185,8 @@ class AccountController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+
 
     /**
      * Permet d'afficher le formulaire d'inscription des utilisateurs

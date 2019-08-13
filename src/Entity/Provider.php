@@ -57,6 +57,11 @@ class Provider extends User
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $logoFilename;
+
     public function __construct()
     {
         $this->Service = new ArrayCollection();
@@ -222,6 +227,18 @@ class Provider extends User
         if(count($this->comments) > 0) return $sum / count($this->comments);
 
         return 0;
+    }
+
+    public function getLogoFilename(): ?string
+    {
+        return $this->logoFilename;
+    }
+
+    public function setLogoFilename(?string $logoFilename): self
+    {
+        $this->logoFilename = $logoFilename;
+
+        return $this;
     }
 
 

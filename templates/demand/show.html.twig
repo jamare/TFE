@@ -19,9 +19,9 @@
                 <h2>{{ demand.title }}</h2>
                 <p>{{ demand.description|raw }}</p>
 
-
-                <a href="{{ path('execution_create', {'id': demand.id}) }}" class="btn btn-primary">Proposer mes services</a>
-
+                {% if is_granted('ROLE_PROVIDER') %}
+                    <a href="{{ path('execution_create', {'id': demand.id}) }}" class="btn btn-primary">Proposer mes services</a>
+                {% endif %}
 
 
 

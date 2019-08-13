@@ -12,8 +12,10 @@ use App\Form\PasswordUpdateType;
 use App\Repository\DemandRepository;
 use App\Repository\ExecutionRepository;
 use App\Repository\ProviderRepository;
+use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,6 +42,25 @@ class ProfileController extends AbstractController
             $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()){
+
+                /** @var UploadedFile $uploadedFile */
+                $uploadedFile = $form['logoFilename']->getData();
+
+                if($uploadedFile){
+                    $destination = $this->getParameter('kernel.project_dir').'/public/assets/img/logos';
+
+                    $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
+
+                    $uploadedFile->move(
+                        $destination,
+                        $newFilename
+                    );
+                    $user->setLogoFilename($newFilename);
+                }
+
+
+
                 $manager->persist($user);
                 $manager->flush();
 

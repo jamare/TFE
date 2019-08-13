@@ -9,6 +9,7 @@ use App\Entity\Provider;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -84,6 +85,10 @@ class AccountType extends AbstractType
                 'multiple' => true,
                 'attr' => array('class' => 'form-control'),
             ))
+            ->add('logoFilename', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+            ])
             ->add('submit', SubmitType::class)
         ;
     }
