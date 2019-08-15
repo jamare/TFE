@@ -16,11 +16,18 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class AccountType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $imageConstraints = [
+            new Image([
+                'maxSize' => '5M'
+            ])
+        ];
+
         $builder
             ->add('name', TextType::class, array(
                 'label' => ' ',
@@ -85,9 +92,12 @@ class AccountType extends AbstractType
                 'multiple' => true,
                 'attr' => array('class' => 'form-control'),
             ))
+
             ->add('logoFilename', FileType::class, [
+                'label' => "Logo",
                 'mapped' => false,
                 'required' => false,
+                'constraints' => $imageConstraints
             ])
             ->add('submit', SubmitType::class)
         ;

@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Entity\Provider;
+use App\Entity\Role;
 use App\Entity\TempUser;
 use App\Form\RegistrationTempType;
 use App\Form\RegistrationType;
 use App\Form\RegistrationUserType;
 use App\Utils\Mailer;
+use App\Utils\UploaderHelper;
 use Doctrine\Common\Persistence\ObjectManager;
 use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -157,7 +159,7 @@ class AccountController extends AbstractController
      *
      * @return Response
      */
-    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder){
+    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, UploaderHelper $uploaderHelper){
         $provider = new Provider();
 
         $form = $this->createForm(RegistrationType::class, $provider);
@@ -170,6 +172,15 @@ class AccountController extends AbstractController
 
             $provider->setRegistration(new \DateTime());
             $provider->setBanished(0);
+            $provider->addSiteRole('ROLE_PROVIDER');
+
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['logoFilename']->getData();
+
+            if($uploadedFile){
+                $newFilename = $uploaderHelper->uploadProviderLogo($uploadedFile);
+                $user->setLogoFilename($newFilename);
+            }
 
             $manager->persist($provider);
             $manager->flush();

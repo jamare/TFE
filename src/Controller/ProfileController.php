@@ -12,6 +12,8 @@ use App\Form\PasswordUpdateType;
 use App\Repository\DemandRepository;
 use App\Repository\ExecutionRepository;
 use App\Repository\ProviderRepository;
+use App\Utils\UploaderHelper;
+use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -32,7 +34,7 @@ class ProfileController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @return Response
      */
-    public function profile(Request $request, ObjectManager $manager)
+    public function profile(Request $request, ObjectManager $manager, EntityManagerInterface $em, UploaderHelper $uploaderHelper)
     {
         $user = $this->getUser();
 
@@ -47,19 +49,9 @@ class ProfileController extends AbstractController
                 $uploadedFile = $form['logoFilename']->getData();
 
                 if($uploadedFile){
-                    $destination = $this->getParameter('kernel.project_dir').'/public/assets/img/logos';
-
-                    $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-                    $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
-
-                    $uploadedFile->move(
-                        $destination,
-                        $newFilename
-                    );
+                    $newFilename = $uploaderHelper->uploadProviderLogo($uploadedFile);
                     $user->setLogoFilename($newFilename);
                 }
-
-
 
                 $manager->persist($user);
                 $manager->flush();
