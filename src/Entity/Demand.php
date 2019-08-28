@@ -44,6 +44,11 @@ class Demand
      */
     private $executions;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ImageFront;
+
     public function __construct()
     {
         $this->executions = new ArrayCollection();
@@ -119,6 +124,18 @@ class Demand
                 $execution->setDemand(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImageFront(): ?string
+    {
+        return $this->ImageFront;
+    }
+
+    public function setImageFront(?string $ImageFront): self
+    {
+        $this->ImageFront = $ImageFront;
 
         return $this;
     }

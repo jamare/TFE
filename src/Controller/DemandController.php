@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Demand;
 use App\Form\DemandType;
 use App\Repository\DemandRepository;
+use App\Utils\UploaderHelper;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,15 +39,23 @@ class DemandController extends AbstractController
      *
      * @return Response
      */
-    public function create(Request $request, ObjectManager $manager){
+    public function create(Request $request, ObjectManager $manager, UploaderHelper $uploaderHelper){
 
         $demand = new Demand();
-        //$user = $this->getUser();
 
         $form = $this->createForm(DemandType::class, $demand);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['logoFilename']->getData();
+
+            if($uploadedFile){
+                $newFilename = $uploaderHelper->uploadDemandFrontImage($uploadedFile);
+                $demand->setImageFront($newFilename);
+            }
+
             $demand->setCustomer($this->getUser());
             $manager->persist($demand);
             $manager->flush();

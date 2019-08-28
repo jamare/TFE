@@ -24,7 +24,7 @@ class AccountType extends AbstractType
     {
         $imageConstraints = [
             new Image([
-                'maxSize' => '5M'
+                'maxSize' => '1M'
             ])
         ];
 

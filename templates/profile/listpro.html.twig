@@ -10,7 +10,13 @@
         <div class="col-xl-4 col-lg-6 col-md-6">
             <div class="strip grid">
                 <figure>
-                        <a href="#"><img src="{{ asset('assets/img/location_1.jpg') }}" class="img-fluid" alt=""><div class="read_more"><span>En savoir plus ...</span></div></a>
+
+                    {% if (provider.logoFilename is null) %}
+
+                        <img src="{{ asset('assets/img/logos/logo_not_found.jpg' | imagine_filter('squared_thumbnail_small') ) }}" />
+                    {% else %}
+                        <a href="#"><img src="/assets/img/logos/{{ provider.logoFilename }}" ><div class="read_more"><span>En savoir plus ...</span></div></a>
+                    {% endif %}
                         {% for category in provider.service %}
                             <small>{{ category.name }}</small>
                         {% endfor %}

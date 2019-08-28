@@ -1,127 +1,41 @@
 {% extends 'base_listing.html.twig' %}
 
-
+{% block title %}Liste des annonces{% endblock %}
 
 {% block body %}
     {% block content %}
 
-        <div class="container margin_60_35">
-            <div class="row">
-                <aside class="col-lg-3" id="sidebar">
-                    <div id="filters_col">
-                        <a data-toggle="collapse" href="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters" id="filters_col_bt">Filters </a>
-                        <div class="collapse show" id="collapseFilters">
-                            <div class="filter_type">
-                                <h6>Category</h6>
-                                <ul>
-                                    <li>
-                                        <label class="container_check">Restaurants <small>245</small>
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">Shops <small>67</small>
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">Bars <small>32</small>
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">Events <small>89</small>
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="filter_type">
-                                <h6>Distance</h6>
-                                <div class="distance"> Radius around selected destination <span></span> km</div>
-                                <input type="range" min="10" max="100" step="10" value="30" data-orientation="horizontal">
-                            </div>
-                            <div class="filter_type">
-                                <h6>Rating</h6>
-                                <ul>
-                                    <li>
-                                        <label class="container_check">Superb 9+ <small>43</small>
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">Very Good 8+ <small>15</small>
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">Good 7+ <small>56</small>
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">Pleasant 6+ <small>23</small>
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!--/collapse -->
-                    </div>
-                    <!--/filters col-->
-                </aside>
-                <!-- /aside -->
+        <div class="row">
+            {% for demand in demands %}
+                <div class="col-xl-4 col-lg-6 col-md-6">
+                    <div class="strip grid">
+                        <figure>
 
-                <div class="col-lg-9">
-                    <div class="row">
-                        {% for demand in demands %}
+                            {% if (demand.ImageFront is null) %}
+
+                                <img src="{{ asset('assets/img/logos/logo_not_found.jpg' | imagine_filter('squared_thumbnail_small') ) }}" />
+                            {% else %}
+                                <a href="#"><img src="/assets/img/imageDemand/{{ demand.ImageFront }}" ><div class="read_more"><span>En savoir plus ...</span></div></a>
+                            {% endif %}
+                            {#{% for category in provider.service %}#}
+                                {#<small>{{ category.name }}</small>#}
+                            {#{% endfor %}#}
+                        </figure>
+                        <div class="wrapper">
                             {% set url = path('demands_show',{'id':demand.id}) %}
-                        <div class="col-md-6">
-                            <div class="strip grid">
-                                <figure>
-                                    <a href="#0" class="wish_bt"></a>
-                                    <a href="detail-restaurant.html"><img src="img/location_1.jpg" class="img-fluid" alt="">
-                                        <div class="read_more"><span>En savoir plus ...</span></div>
-                                    </a>
-                                    <small>Catégorie ?</small>
-                                </figure>
-                                <div class="wrapper">
 
-                                    <h3><a href="{{ url }}">{{ demand.title }}</a></h3>
-                                    <p>{{ demand.description|raw }}</p>
-
-
-                                </div>
-                                <ul>
-                                    <li><span class="loc_open">Annonce Ouverte</span></li>
-                                    <li>
-                                        <div class="score"><span>Superb<em>350 Reviews</em></span><strong>8.9</strong></div>
-                                    </li>
-                                </ul>
-                            </div>
+                                <h3><a href="{{ url }}">{{ demand.title }}</a></h3>
+                                <p>{{ demand.description|raw }}</p>
+                                <a href="{{ url }}" class="btn btn-primary">Consulter la demande</a>
                         </div>
-                        <!-- /strip grid -->
-                        {% endfor %}
 
 
 
                     </div>
-                    <!-- /row -->
-
-                    <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
                 </div>
-                <!-- /col -->
-            </div>
+            {% endfor %}
         </div>
+
 
     {% endblock %}
 {% endblock %}

@@ -27,4 +27,19 @@ class UploaderHelper
 
         return $newFilename;
     }
+
+    public function uploadDemandFrontImage(UploadedFile $uploadedFile): string
+    {
+        $destination = $this->uploadsPath.'/ImageDemand';
+
+        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+        $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
+
+        $uploadedFile->move(
+            $destination,
+            $newFilename
+        );
+
+        return $newFilename;
+    }
 }
