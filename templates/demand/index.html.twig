@@ -13,7 +13,7 @@
 
                             {% if (demand.ImageFront is null) %}
 
-                                <img src="{{ asset('assets/img/logos/logo_not_found.jpg' | imagine_filter('squared_thumbnail_small') ) }}" />
+                                <img src="{{ asset('assets/img/imageDemand/illustration_off.jpg' | imagine_filter('squared_thumbnail_small') ) }}" />
                             {% else %}
                                 <a href="#"><img src="/assets/img/imageDemand/{{ demand.ImageFront }}" ><div class="read_more"><span>En savoir plus ...</span></div></a>
                             {% endif %}
@@ -25,7 +25,10 @@
                             {% set url = path('demands_show',{'id':demand.id}) %}
 
                                 <h3><a href="{{ url }}">{{ demand.title }}</a></h3>
+                                <strong>Catégorie : {{ demand.category.name }}</strong><br />
+                                <strong>Province : {{ demand.province.name }}</strong>
                                 <p>{{ demand.description|raw }}</p>
+
                                 <a href="{{ url }}" class="btn btn-primary">Consulter la demande</a>
                         </div>
 

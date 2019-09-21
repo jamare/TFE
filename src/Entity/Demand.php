@@ -49,6 +49,18 @@ class Demand
      */
     private $ImageFront;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="demands")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Province", inversedBy="demand")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $province;
+
     public function __construct()
     {
         $this->executions = new ArrayCollection();
@@ -136,6 +148,30 @@ class Demand
     public function setImageFront(?string $ImageFront): self
     {
         $this->ImageFront = $ImageFront;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getProvince(): ?Province
+    {
+        return $this->province;
+    }
+
+    public function setProvince(?Province $province): self
+    {
+        $this->province = $province;
 
         return $this;
     }

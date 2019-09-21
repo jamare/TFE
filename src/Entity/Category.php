@@ -28,9 +28,15 @@ class Category
      */
     private $providers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Demand", mappedBy="category")
+     */
+    private $demands;
+
     public function __construct()
     {
         $this->providers = new ArrayCollection();
+        $this->demands = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,5 +86,36 @@ class Category
 
     public function __toString() {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|Demand[]
+     */
+    public function getDemands(): Collection
+    {
+        return $this->demands;
+    }
+
+    public function addDemand(Demand $demand): self
+    {
+        if (!$this->demands->contains($demand)) {
+            $this->demands[] = $demand;
+            $demand->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemand(Demand $demand): self
+    {
+        if ($this->demands->contains($demand)) {
+            $this->demands->removeElement($demand);
+            // set the owning side to null (unless already changed)
+            if ($demand->getCategory() === $this) {
+                $demand->setCategory(null);
+            }
+        }
+
+        return $this;
     }
 }

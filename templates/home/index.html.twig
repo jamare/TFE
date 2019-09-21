@@ -19,7 +19,12 @@
             <div class="col-lg-3 col-sm-6">
                 <a href="{{ url }}" class="grid_item small">
                     <figure>
-                        <img src="{{  asset('assets/img/shop_1.jpg') }}" alt="">
+                        {% if (data.demand.ImageFront is null) %}
+                            <img src="{{ asset('assets/img/imageDemand/illustration_off.jpg' | imagine_filter('squared_thumbnail_small') ) }}" />
+                        {% else %}
+                            <img src="/assets/img/imageDemand/{{ data.demand.ImageFront }}" >
+                        {% endif %}
+
                         <div class="info">
                             <h3>{{ data.demand.title }}</h3>
                         </div>
@@ -45,7 +50,11 @@
             <div class="col-lg-3 col-sm-6">
                 <a href="#" class="grid_item small">
                     <figure>
-                        <img src="{{  asset('assets/img/hotel_1.jpg') }}" alt="">
+                        {% if (data.provider.logoFilename is null) %}
+                            <img src="{{ asset('assets/img/logos/logo_not_found.jpg' | imagine_filter('squared_thumbnail_small') ) }}" />
+                        {% else %}
+                            <img src="/assets/img/logos/{{ data.provider.logoFilename }}" >
+                        {% endif %}
                         <div class="info">
                             {#<div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>#}
                             <strong>{% include 'partials/rating.html.twig' with {'rating' : data.provider.avgRatings} %}</strong>

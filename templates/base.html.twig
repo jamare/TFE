@@ -41,36 +41,60 @@
                 <div class="container">
                     <h3>Trouvez ce dont vous avez besoin!</h3>
                     <p>Trouvez le meilleur prix, le meilleur délai pour vos travaux</p>
-                    <form method="post" action="grid-listings-filterscol.html">
-                        <div class="row no-gutters custom-search-input-2">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Que cherchez-vous...">
-                                    <i class="icon_search"></i>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Où">
-                                    <i class="icon_pin_alt"></i>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <select class="wide">
-                                    <option>Toutes les catégories</option>
-                                    <option>Shops</option>
-                                    <option>Hotels</option>
-                                    <option>Restaurants</option>
-                                    <option>Bars</option>
-                                    <option>Events</option>
-                                    <option>Fitness</option>
+                    {#<form method="get" action="{{ path('search') }}">#}
+                        {#<div class="row no-gutters custom-search-input-2">#}
+
+                                {#<div class="col-lg-4">#}
+                                    {#<div class="form-group">#}
+                                        {#<div class="form-control">Chercher une demande </div>#}
+                                        {#<i class="icon_search"></i>#}
+                                    {#</div>#}
+                                {#</div>#}
+                                {#<div class="col-lg-3">#}
+                                    {#<select class="wide">#}
+                                        {#<option>Où</option>#}
+                                        {#{% for province in provinces %}#}
+                                            {#<option>{{ province.name }}</option>#}
+                                        {#{% endfor %}#}
+                                    {#</select>#}
+                                {#</div>#}
+                                {#<div class="col-lg-3">#}
+                                    {#<select class="wide">#}
+                                        {#<option>Toutes les catégories</option>#}
+                                        {#{% for category in categories %}#}
+                                            {#<option>{{ category.name }}</option>#}
+                                        {#{% endfor %}#}
+                                    {#</select>#}
+                                {#</div>#}
+                                {#<div class="col-lg-2">#}
+                                    {#<input type="submit" value="Rechercher">#}
+                                {#</div>#}
+                        {#</div>#}
+                        {#<!-- /row -->#}
+                    {#</form>#}
+                    <form method="get" action="{{ path('search') }}">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_province">Choisissez la province</label>
+                                <select class="form-control" id="search_province" name="search_province" title="Choisir la province">
+                                    {{ render(controller('App\\Controller\\ProvinceController::list_provinces')) }}
                                 </select>
                             </div>
-                            <div class="col-lg-2">
-                                <input type="submit" value="Recherchez">
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_category">Choisissez la categorie</label>
+                                <select class="form-control" id="search_category" name="search_category" title="Choisir la categorie">
+                                    {{ render(controller('App\\Controller\\CategoryController::list_category')) }}
+                                </select>
                             </div>
                         </div>
-                        <!-- /row -->
+
+                        <button type="submit">Rechercher</button>
+
+
                     </form>
                 </div>
             </div>
@@ -129,13 +153,13 @@
                     <div class="main_title_2">
                         <span><em></em></span>
                         <h2>Comment ça marche ?</h2>
-                        <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="box_how">
                                 <i class="pe-7s-search"></i>
-                                <h3>Search Locations</h3>
+                                <h3>Rechercher les demandes de services</h3>
                                 <p>An nec placerat repudiare scripserit, temporibus complectitur at sea, vel ignota fierent eloquentiam id.</p>
                                 <span></span>
                             </div>
@@ -143,7 +167,7 @@
                         <div class="col-md-4">
                             <div class="box_how">
                                 <i class="pe-7s-info"></i>
-                                <h3>View Location Info</h3>
+                                <h3>Consulter les demandes</h3>
                                 <p>An nec placerat repudiare scripserit, temporibus complectitur at sea, vel ignota fierent eloquentiam id.</p>
                                 <span></span>
                             </div>
@@ -151,13 +175,13 @@
                         <div class="col-md-4">
                             <div class="box_how">
                                 <i class="pe-7s-like2"></i>
-                                <h3>Book, Reach or Call</h3>
+                                <h3>Proposer vos services</h3>
                                 <p>An nec placerat repudiare scripserit, temporibus complectitur at sea, vel ignota fierent eloquentiam id.</p>
                             </div>
                         </div>
                     </div>
                     <!-- /row -->
-                    <p class="text-center add_top_30 wow bounceIn" data-wow-delay="0.5s"><a href="account.html" class="btn_1 rounded">Register Now</a></p>
+                    <p class="text-center add_top_30 wow bounceIn" data-wow-delay="0.5s"><a href="account.html" class="btn_1 rounded">S'inscrire maintenant !</a></p>
                 </div>
                 <canvas id="hero-canvas" width="1920" height="1080"></canvas>
             </div>

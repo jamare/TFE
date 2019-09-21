@@ -80,7 +80,6 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             $provider->setTva($faker->vat);
             $provider->setWeb($faker->url);
             $provider->addService($this->getReference("category_".rand(1,8)));
-            $provider->addService($this->getReference("category_".rand(1,8)));
             $provider->setRegistration($faker->dateTimeBetween('-365 days', '-1 days'));
             $provider->setPassword($password);
             $provider->setBanished(false);
@@ -114,6 +113,9 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             $description = '<p>' . join($faker->paragraphs(3), '</p><p>') . '</p>';
             $demand->setDescription($description);
             $demand->setCustomer($customer);
+            $demand->setCategory($this->getReference("category_".rand(1,8)));
+            $demand->setProvince($this->getReference("province_".rand(1,10)));
+
 
             //Gestion des relations demandes->exécuteurs
 
@@ -167,7 +169,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
         return array(
             LocalityFixtures::class,
             CategoryFixtures::class,
-
+            ProvinceFixtures::class,
         );
 
     }

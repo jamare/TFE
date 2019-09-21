@@ -1,0 +1,55 @@
+{% extends 'base_listing.html.twig' %}
+
+{% block title %}Résultat de la recherche{% endblock %}
+
+{% block body %}
+
+    {% block content %}
+
+       <h1>Résultat de la recherche :</h1>
+            <div class="row">
+                {% if demands|length == 0 %}
+                    <p>Aucun résultat ...</p>
+                {% else %}
+                    <h4>Nous avons trouvé des résultats à votre recherche :</h4>
+                    <div class="row">
+                    {% for demand in demands %}
+                        <div class="col-xl-4 col-lg-6 col-md-6">
+                            <div class="strip grid">
+                                <figure>
+
+                                    {% if (demand.ImageFront is null) %}
+
+                                        <img src="{{ asset('assets/img/imageDemand/illustration_off.jpg' | imagine_filter('squared_thumbnail_small') ) }}" />
+                                    {% else %}
+                                        <a href="#"><img src="/assets/img/imageDemand/{{ demand.ImageFront }}" ><div class="read_more"><span>En savoir plus ...</span></div></a>
+                                    {% endif %}
+                                    {#{% for category in provider.service %}#}
+                                    {#<small>{{ category.name }}</small>#}
+                                    {#{% endfor %}#}
+                                </figure>
+                                <div class="wrapper">
+                                    {% set url = path('demands_show',{'id':demand.id}) %}
+
+                                    <h3><a href="{{ url }}">{{ demand.title }}</a></h3>
+                                    <strong>Catégorie : {{ demand.category.name }}</strong><br />
+                                    <strong>Province : {{ demand.province.name }}</strong>
+                                    <p>{{ demand.description|raw }}</p>
+
+                                    <a href="{{ url }}" class="btn btn-primary">Consulter la demande</a>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                    </div>
+            {% endif %}
+            </div>
+
+    {% endblock %}
+
+
+{% endblock %}

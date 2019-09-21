@@ -1,32 +1,35 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_listing.html.twig' %}
 
 
 
 {% block body %}
     {% block content %}
         <div class="container">
-
-            {% if app.user and app.user == demand.customer %}
-                <a href="{{ path('demands_edit', {'id':demand.id}) }}" class="btn btn-secondary">Modifier l'annonce</a>
-                <a href="{{ path('demands_delete', {'id':demand.id}) }}" class="btn btn-danger" onclick="return confirm('Etes-vous sur de vouloir supprimer la demande ? : {{ demand.title }}')">Supprimer l'annonce</a>
-            {% endif %}
-
             <h1>- Détail de la demande -</h1>
-            <hr>
-            <div class="row">
-                {% set d = demand.customer %}
+                <hr>
+                <h2 class="btn-primary">{{ demand.title }}</h2>
+                <div class="row">
 
-                <h2>{{ demand.title }}</h2>
-                <p>{{ demand.description|raw }}</p>
+                    <div class="col">
+                        {% if app.user and app.user == demand.customer %}
+                            <a href="{{ path('demands_edit', {'id':demand.id}) }}" class="btn btn-secondary">Modifier l'annonce</a>
+                            <a href="{{ path('demands_delete', {'id':demand.id}) }}" class="btn btn-danger" onclick="return confirm('Etes-vous sur de vouloir supprimer la demande ? : {{ demand.title }}')">Supprimer l'annonce</a>
+                        {% endif %}
 
-                {% if is_granted('ROLE_PROVIDER') %}
-                    <a href="{{ path('execution_create', {'id': demand.id}) }}" class="btn btn-primary">Proposer mes services</a>
-                {% endif %}
+                        {% set d = demand.customer %}
 
 
+                        <p>{{ demand.description|raw }}</p>
 
+                        {% if is_granted('ROLE_PROVIDER') %}
+                            <a href="{{ path('execution_create', {'id': demand.id}) }}" class="btn btn-primary">Proposer mes services</a>
+                        {% endif %}
+                    </div>
 
-            </div>
+                    <div class="col">
+                        <img src="/assets/img/imageDemand/{{ demand.ImageFront }}" >
+                    </div>
+                </div>
 
 
             <!-- A régler, affichage du nom de l'éditeur de l'annonce -->

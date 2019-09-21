@@ -56,4 +56,23 @@ class DemandRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function searchDemandByCategoryProvince($search_province, $search_category){
+        $qb = $this->createQueryBuilder('s');
+
+        if($search_category !== ''){
+            $qb->leftJoin('s.category', 'category');
+            $qb->addSelect('category');
+            $qb->andWhere('category.name LIKE :search_category');
+            $qb->setParameter('search_category', $search_category);
+        }
+        if($search_province !== ''){
+            $qb->leftJoin('s.province', 'province');
+            $qb->addSelect('province');
+            $qb->andWhere('province.name LIKE :search_province');
+            $qb->setParameter('search_province', $search_province);
+        }
+        $result= $qb->getQuery()->getResult();
+        return $result;
+    }
 }
