@@ -33,7 +33,8 @@
                            <td>{{ provider.email }}</td>
                            <td>{{ provider.web }}</td>
                            <td>{{ provider.tva }}</td>
-                            <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                            <td><a href="#">Delete</a></td>
+                            {#<td><a href="{{ path('admin_provider_delete', {'id': provider.id}) }}">Delete</a></td>#}
                         </tr>
                         {% endfor %}
                     </tbody>

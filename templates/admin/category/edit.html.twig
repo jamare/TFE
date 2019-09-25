@@ -1,0 +1,18 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Modification de la categorie n°{{ category.id }}{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+            <h1 class="my-5">Modification de la categorie : {{ category.name }}</h1>
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary">
+                <i class="icon-ok"> Enregistrez les modifications</i>
+
+            </button>
+            {{ form_end(form) }}
+        </div>
+    {% endblock %}
+{% endblock %}
