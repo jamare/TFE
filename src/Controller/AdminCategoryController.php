@@ -98,14 +98,20 @@ class AdminCategoryController extends AbstractController
      * @return Response
      */
     public function delete(Category $category, ObjectManager $manager){
-        $manager->remove($category);
-        $manager->flush();
+        if(count($category->getDemands()) > 0){
+            $this->addFlash(
+                'warning',
+                "Vous ne pouvez pas supprimer la catégorie <strong>{$category->getName()}</strong> car elle contient des demandes en cours"
+            );
+        }else {
+            $manager->remove($category);
+            $manager->flush();
 
-        $this->addFlash(
-            'success',
-            "La catégorie a bien été supprimée !"
-        );
-
+            $this->addFlash(
+                'success',
+                "La catégorie a bien été supprimée !"
+            );
+        }
         return $this->redirectToRoute('admin_category_index');
     }
 

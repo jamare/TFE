@@ -98,14 +98,20 @@ class AdminProvincesController extends AbstractController
      * @return Response
      */
     public function delete(Province $province, ObjectManager $manager){
-        $manager->remove($province);
-        $manager->flush();
+        if(count($province->getDemand()) > 0){
+            $this->addFlash(
+                'warning',
+                "Vous ne pouvez pas supprimer la province <strong>{$province->getName()}</strong> car elle contient des demandes en cours"
+            );
+        }else {
+            $manager->remove($province);
+            $manager->flush();
 
-        $this->addFlash(
-            'success',
-            "La province a bien été supprimée !"
-        );
-
+            $this->addFlash(
+                'success',
+                "La province a bien été supprimée !"
+            );
+        }
         return $this->redirectToRoute('admin_provinces_index');
     }
 }
